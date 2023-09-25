@@ -21,9 +21,10 @@ public class OddFruitOut {
     	Scanner scanner = new Scanner(System.in);
     	String input = scanner.nextLine();
     	
-    	//Adding a comma to the end of the input string so that my code doesn't break.
-    	//My code relies on the index of commas. I need this to compare the last two words.
+    	// Adding a comma to the end of the input string so that my code doesn't break.
+    	// My code relies on the index of commas. I need this to compare the last two words.
     	input += ",";
+    	// System.out.println(input);
     	
     	scanner.close();
     	
@@ -34,11 +35,12 @@ public class OddFruitOut {
     		String firstWord = input.substring(0, input.indexOf(','));
 
     		input = input.substring(input.indexOf(',') + 1);
+    		// System.out.println(input);
     		
     		String secondWord = input.substring(0, input.indexOf(','));
     		
     		if (secondWord.compareTo(firstWord) < 0) {
-    			condition = false;
+    			condition = false; // terminate the loop
     			System.out.printf("%s%d: %s", result, counter, firstWord);
     		}
     			
@@ -48,14 +50,5 @@ public class OddFruitOut {
     	
     }
     
-    /** && countCharacter(input, ',') > 0
-     * Return the number of times a character occurs in a string.
-     * 
-     * @param input The string to search
-     * @param targetChar The target char we are trying to count the occurrence of.
-     * @return The number of times a char appears in a string.
-     */
-    public static int countCharacter(String input, char targetChar) {
-        return (int) input.chars().filter(ch -> ch == targetChar).count();
-    }
 }
+   

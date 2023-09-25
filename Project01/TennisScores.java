@@ -5,7 +5,7 @@ import java.util.Scanner;
  * A Tennis Scores calculator. 
  *
  * @author Siddharth Sancheti - Section 33
- * @version September 18, 2023
+ * @version September 25, 2023
  */
 
 public class TennisScores {
@@ -21,7 +21,7 @@ public class TennisScores {
         
         scanner.close();
 
-        // The values of each of the scores are defined below, you should use these int variables in your calculations. 
+        // The values of each of the scores are defined below. 
         int currentScoreIndex = 0;         
         int playerOneGameOne = Integer.parseInt(scores.substring(currentScoreIndex, currentScoreIndex + 2));        
         currentScoreIndex += 3; 
@@ -105,10 +105,12 @@ public class TennisScores {
         for (int i = 0; i < playerOneScores.length; ++i)
         	playerTwoTotal += playerTwoScores[i];
         
+        // Determine the winner by comparing the total amount of points scored
         String winner = playerOneTotal > playerTwoTotal ? playerOne : playerTwo;
         
         System.out.printf("The winner is: %s\n", winner);
         
+        // Print the points scored by each player.
         System.out.printf("%s scored %d points.\n", playerOne, playerOneTotal);
         System.out.printf("%s scored %d points.\n", playerTwo, playerTwoTotal);
         
@@ -116,14 +118,17 @@ public class TennisScores {
         String playerOneGameLog = "";
         String playerTwoGameLog = "";
         for (int i = 0; i < playerOneScores.length; ++i) {
-        	if (didPlayerOneWin(playerOneScores[i], playerTwoScores[i])) {
+        	if (playerOneScores[i] > playerTwoScores[i]) { // If player one scored more than player two
         		playerOneGameLog += "-W";
         		playerTwoGameLog += "-L";
-        	} else {
+        	} else {									  // If player two scored more than player one
         		playerOneGameLog += "-L";
         		playerTwoGameLog += "-W";
         	}
         }
+        
+        // The for loop will add a dash before the first letter
+        // Removing the first dash by taking the substring of everything after the first dash
         playerOneGameLog = playerOneGameLog.substring(1);
         playerTwoGameLog = playerTwoGameLog.substring(1);
         
@@ -136,19 +141,6 @@ public class TennisScores {
         
     }
     
-    
-    /**
-     * Determines whether player one won the game.
-     * 
-     * @param playerOne Player One's score for the game.
-     * @param playerTwo Player Two's score for the game.
-     * @return true if player one's score is greater than player two. Else, return false.
-     */
-    public static boolean didPlayerOneWin(int playerOne, int playerTwo) {
-    	
-    	return playerOne >= playerTwo;
-    	
-    }
     
     /**
      * Determines the number of perfect games a player has.

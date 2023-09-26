@@ -76,7 +76,7 @@ public class Tea {
     public double getSteepTime() { return steepTime; }
     
     // Update the amount of stock available.
-    public void restock(int quantity) { this.stockAvailable = quantity; }
+    public void restock(int quantity) { stockAvailable += quantity; }
 	
     public double purchaseTea(int quantity) { 
     	int purchaseAmt = quantity;

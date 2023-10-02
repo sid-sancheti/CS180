@@ -12,6 +12,7 @@ public class State {
     }
 
     public String getCapital() { return capital; }
+	@SuppressWarnings("unused")
 	private int getPopulation() { return population; }
 
     public void setCapital(String capital) { this.capital = capital; }

@@ -16,7 +16,6 @@ public class FoodTruck {
         System.out.println("Would you like to place an order? (yes or no)");
         String orderStatus = scanner.nextLine();
         
-        String category = "";
         String cookMethod = "";
         String dish = "";
         

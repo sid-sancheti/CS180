@@ -1,5 +1,6 @@
 package Week7;
-/**
+/**Restaurant.java
+ * 
  * Class representation of a restaurant.
  * 
  * @author Siddharth Sancheti, Section 33
@@ -39,10 +40,14 @@ public class Restaurant {
 		// Need to put everything in an if statement because there is a chance cupsSold is null.
 		if (cupsSold != null) {
 			// Move through each row of cups sold to get the number of cups sold for each flavor.
-			for(int row = 0; row < cupsSold.length; ++row)
-				for (int col = 0; col < cupsSold[0].length; ++col)
+			for (int row = 0; row < cupsSold.length; ++row) {
+				double flavorCost = flavors[row].getCost();
+				for (int col = 0; col < cupsSold[row].length; ++col) {
 					// Multiply the number of cups sold per day times the cost of the flavor sold.
-					totalSales += (cupsSold[row][col] * flavors[row].getCost());
+
+					totalSales += (cupsSold[row][col] * flavorCost);
+				}
+			}
 		}	
 		
 		return totalSales;
@@ -58,24 +63,27 @@ public class Restaurant {
 	}
 	
 	public double closeRestaurant() {
+		
+		double totalSales = totalSales();
+		
 		name = null;
 		flavors = null;
 		cupsSold = null;
 		hours = 0;
 		summerDiscount = false;
 		
-		return totalSales();
+		return totalSales;
 	}
 	
 	public void addFlavor(Flavor newFlavor) {
 		for (int i = 0; i < flavors.length; ++i) {
-			
-			if (flavors[flavors.length - 1] != null)
+
+			if (i == flavors.length - 1 && flavors[flavors.length - 1] != null)
 				System.out.println("Error, no available space!");
 				
 			if (flavors[i] == null) {
 				flavors[i] = newFlavor;
-				i = flavors.length; // Terminate the for loop.
+				i = flavors.length + 1; // Terminate the for loop.
 			}
 		}
 	}
@@ -97,7 +105,7 @@ public class Restaurant {
 	public void setHours(int hours) { this.hours = hours; }
 
 	// Getter and setter for the 'summerDiscount' field
-	public boolean isSummerDiscount() { return summerDiscount; }
-	public void setSummerDiscount(boolean summerDiscount) { this.summerDiscount = summerDiscount; }
+	public boolean hasSummerDiscount() { return summerDiscount; }
+	public void setSummerDiscount(boolean summerDiscounts) { this.summerDiscount = summerDiscounts; }
  
 }

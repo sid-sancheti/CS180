@@ -10,19 +10,23 @@ package Week7;
 public class IceCream {
     private Restaurant[] restaurants;
     private boolean summer;
-    private int newBusiness;
+    private int newBusinesses;
     private int newBusinessThreshold;
     
 
     // Constructor
-    public IceCream(Restaurant[] restaurants, boolean summer, int newBusiness, int newBusinessThreshold) {
+    public IceCream(Restaurant[] restaurants, boolean summer, int newBusinesses, int newBusinessThreshold) {
         this.restaurants = restaurants;
         this.summer = summer;
-        this.newBusiness = newBusiness;
+        this.newBusinesses = newBusinesses;
         this.newBusinessThreshold = newBusinessThreshold;
     }
 
-    public int closeBusiness() {
+	/**Close the businesses that don't make enough money.
+	 *
+	 * @return The number of businesses closed.
+	 */
+    public int closeBusinesses() {
     	// First step, get the totalSales from every business.
     	double[] restaurantSales = new double[restaurants.length];
     	for (int i = 0; i < restaurantSales.length; ++i) {
@@ -31,20 +35,21 @@ public class IceCream {
     	}
     	
     	int numberOfClosedBusinesses = 0;
-    	for (int i = newBusiness; newBusiness > newBusinessThreshold; --i) {
+    	for (int i = newBusinesses; i > newBusinessThreshold; --i) {
     		restaurants[getSmallestIndex(restaurantSales)].closeRestaurant();
     		restaurantSales[getSmallestIndex(restaurantSales)] = 0; // Set the restaurant sale equal to zero when we
     		// remove it from 'restaurants' array.
     		numberOfClosedBusinesses++;
     	}
-    	
+
+		newBusinesses = 0;
     	return numberOfClosedBusinesses;
     }
     
     public void applySummerDiscounts() {
     	if (summer) {
     		for (int i = 0; i < restaurants.length; ++i) {
-    			if (restaurants[i].isSummerDiscount()) {
+    			if (restaurants[i].hasSummerDiscount()) {
     				if (restaurants[i].totalSales() <= 150.0)
     					restaurants[i].calculateDiscounts(0.25);
     				else if (restaurants[i].totalSales() > 150.0 && restaurants[i].totalSales() <= 300.0)
@@ -68,8 +73,8 @@ public class IceCream {
     public void setSummer(boolean summer) { this.summer = summer; }
 
     // Getter and Setter for 'newBusiness' field
-    public int getNewBusiness() { return newBusiness; }
-    public void setNewBusiness(int newBusiness) { this.newBusiness = newBusiness; }
+    public int getNewBusinesses() { return newBusinesses; }
+    public void setNewBusinesses(int newBusinesses) { this.newBusinesses = newBusinesses; }
 
     // Getter and Setter for 'newBusinessThreshold' field
     public int getNewBusinessThreshold() { return newBusinessThreshold; }
@@ -78,19 +83,21 @@ public class IceCream {
     /**Find the index of the smallest value in an array
      * THAT IS NOT ZERO.
      * 
-     * @param array
+     * @param array Array of integers.
      * @return The index of the smallest value in the array that isn't zero.
      */
     public int getSmallestIndex(double[] array) {
     	int index = 0;
-    	int smallestInteger = Integer.MAX_VALUE;
+    	double smallestInteger = Double.MAX_VALUE;
     	
     	for (int i = 0; i < array.length; ++i) {
-    		if (array[i] != 0 && array[i] < smallestInteger)
-    			index = i;
+    		if (array[i] != 0 && array[i] < smallestInteger) {
+				smallestInteger = array[i]; // Update smallestInteger
+				index = i;
+			}
+
     	}
     	
     	return index;
     }
 }
-

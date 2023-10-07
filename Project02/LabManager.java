@@ -4,7 +4,7 @@ package Project02;
  * Class representation of three CS labs.
  * 
  * @author Siddharth Sancheti, Section 33
- * @version October 4, 2023
+ * @version October 7, 2023
  *
  */
 public class LabManager {
@@ -45,13 +45,18 @@ public class LabManager {
      * Compute the average percentage of utlization for all the labs.
      * 
      * @return The average percentage utilization for all three labs
+     * 
+     * TODO: Need to fix.
      */
     public double calculateTotalUtilization() {
 
         // Double check the math here.
-        double labOneUtilization = (double)(labOne.getMorning().getEnrollment() + labOne.getAfternoon().getEnrollment()) / (double)(labOne.getCapacity() * 2);
-        double labTwoUtiliation = (double)(labTwo.getMorning().getEnrollment() + labTwo.getAfternoon().getEnrollment()) / (double)(labTwo.getCapacity() * 2);
-        double labThreeUtilization = (double)(labThree.getMorning().getEnrollment() + labThree.getAfternoon().getEnrollment()) / (double)(labThree.getCapacity() * 2);
+        double labOneUtilization = (double)(labOne.getMorning().getEnrollment() + labOne.getAfternoon().getEnrollment()) 
+        		/ (double)(labOne.getCapacity() * 2);
+        double labTwoUtiliation = (double)(labTwo.getMorning().getEnrollment() + labTwo.getAfternoon().getEnrollment()) 
+        		/ (double)(labTwo.getCapacity() * 2);
+        double labThreeUtilization = (double)(labThree.getMorning().getEnrollment() + labThree.getAfternoon().getEnrollment()) 
+        		/ (double)(labThree.getCapacity() * 2);
 
         return (labOneUtilization + labTwoUtiliation + labThreeUtilization) / 3d;
     }
@@ -60,11 +65,16 @@ public class LabManager {
      * Returns the number of available seats in all three labs.
      * 
      * @return The capacity minus the enrollment for all labs and their sessions.
+     * 
+     * TODO: Need to fix.
      */
     public int calculateAvailableSeats() {
-        int labOneAvailableSeats = (labOne.getCapacity() * 2) - (labOne.getMorning().getEnrollment() + labOne.getAfternoon().getEnrollment());
-        int labTwoAvailableSeats = (labTwo.getCapacity() * 2) - (labTwo.getMorning().getEnrollment() + labTwo.getAfternoon().getEnrollment());
-        int labThreeAvailableSeats = (labThree.getCapacity() * 2) - (labThree.getMorning().getEnrollment() + labThree.getAfternoon().getEnrollment());
+        int labOneAvailableSeats = (labOne.getCapacity() * 2) - (labOne.getMorning().getEnrollment() + 
+        		labOne.getAfternoon().getEnrollment());
+        int labTwoAvailableSeats = (labTwo.getCapacity() * 2) - (labTwo.getMorning().getEnrollment() + 
+        		labTwo.getAfternoon().getEnrollment());
+        int labThreeAvailableSeats = (labThree.getCapacity() * 2) - (labThree.getMorning().getEnrollment() + 
+        		labThree.getAfternoon().getEnrollment());
 
         return labOneAvailableSeats + labTwoAvailableSeats + labThreeAvailableSeats;
     }
@@ -83,7 +93,7 @@ public class LabManager {
         result += labTwo.listReservations() + "\n";
 
         result += "Lab Three\n";
-        result += labThree.listReservations() + "\n";
+        result += labThree.listReservations();
 
         return result;
     }
@@ -108,29 +118,28 @@ public class LabManager {
     }
 
     /**
-     * Adds a reservation for the lab at the specified location and time. Returns a message depending on the outcome of the operation. 
-     * @param location
-     * @param time
-     * @param name
-     * @param enrollment
+     * Adds a reservation for the lab at the specified location and time.
+     * 
+     * @param location The location of the lab.
+     * @param time The time of the lab.
+     * @param name The name of the lab.
+     * @param enrollment The number of students enrolling in a lab; may not exceed lab capacity.
      * 
      * @return A message indicating the success or failure of the operation.
-     * 
-     * TODO: Find the difference between addReservation and modifyReservation.
      */
     public String addReservation(String location, String time, String name, int enrollment) {
         // Have to check which location and time matches the one passed to the method.
-        if (labOne.getLocation().equals(location))  {
-            if (time.toLowerCase().equals("morning")) {
-                if (labOne.getMorning().getEnrollment() == 0) {
+    	if (labOne.getLocation().equals(location))  {
+            if (time.equals("morning")) {
+                if (labOne.getMorning().getEnrollment() < labOne.getCapacity()) {
                     labOne.getMorning().setName(name);
                     labOne.getMorning().setEnrollment(enrollment);
                     return "Reservation added!";
                 } else {
                     return "Error. Capacity exceeded";
                 }
-            } else if (time.toLowerCase().equals("afternoon")) {
-                if (labOne.getAfternoon().getEnrollment() == 0) {
+            } else if (time.equals("afternoon")) {
+                if (enrollment < labOne.getCapacity()) {
                     labOne.getAfternoon().setName(name);
                     labOne.getAfternoon().setEnrollment(enrollment);
                     return "Reservation added!.";
@@ -141,16 +150,16 @@ public class LabManager {
                 return "Error. Invalid time.";
             }
         } else if (labTwo.getLocation().equals(location)) {
-            if (time.toLowerCase().equals("morning")) {
-                if (labTwo.getMorning().getEnrollment() == 0) {
+            if (time.equals("morning")) {
+                if (enrollment < labTwo.getCapacity()) {
                     labTwo.getMorning().setName(name);
                     labTwo.getMorning().setEnrollment(enrollment);
                     return "Reservation added!";
                 } else {
                     return "Error. Capacity exceeded";
                 }
-            } else if (time.toLowerCase().equals("afternoon")) {
-                if (labTwo.getAfternoon().getEnrollment() == 0) {
+            } else if (time.equals("afternoon")) {
+                if (enrollment < labTwo.getCapacity()) {
                     labTwo.getAfternoon().setName(name);
                     labTwo.getAfternoon().setEnrollment(enrollment);
                     return "Reservation added!";
@@ -161,16 +170,16 @@ public class LabManager {
                 return "Error. Invalid time.";
             }
         } else if (labThree.getLocation().equals(location)) {
-            if (time.toLowerCase().equals("morning")) {
-                if (labThree.getMorning().getEnrollment() == 0) {
+            if (time.equals("morning")) {
+                if (enrollment < labThree.getCapacity()) {
                     labThree.getMorning().setName(name);
                     labThree.getMorning().setEnrollment(enrollment);
                     return "Reservation added!";
                 } else {
                     return "Error. Capacity exceeded";
                 }
-            } else if (time.toLowerCase().equals("afternoon")) {
-                if (labThree.getAfternoon().getEnrollment() == 0) {
+            } else if (time.equals("afternoon")) {
+                if (enrollment < labThree.getCapacity()) {
                     labThree.getAfternoon().setName(name);
                     labThree.getAfternoon().setEnrollment(enrollment);
                     return "Reservation added!";
@@ -187,18 +196,21 @@ public class LabManager {
     }
 
     /**
-     * TODO: Javadoc
-     * @param location
-     * @param time
-     * @return
+     * Removes a lab reservation at a certain location and time.
+     * 
+     * @param location The location of the lab.
+     * @param time The time of the lab.
+     * 
+     * @return The status of the method. Either print an error message or indicate that the operation
+     * was successful.
      */
     public String removeReservation(String location, String time) {
         if (labOne.getLocation().equals(location)) {
-            if (time.toLowerCase().equals("morning")) {
+            if (time.equals("morning")) {
                 labOne.getMorning().setName("");
                 labOne.getMorning().setEnrollment(0);
                 return "Reservation removed!";
-            } else if (time.toLowerCase().equals("afternoon")) {
+            } else if (time.equals("afternoon")) {
                 labOne.getAfternoon().setName("");
                 labOne.getAfternoon().setEnrollment(0);
                 return "Reservation removed!";
@@ -206,11 +218,11 @@ public class LabManager {
                 return "Error. Invalid time.";
             }
         } else if (labTwo.getLocation().equals(location)) {
-            if (time.toLowerCase().equals("morning")) {
+            if (time.equals("morning")) {
                 labTwo.getMorning().setName("");
                 labTwo.getMorning().setEnrollment(0);
                 return "Reservation removed!";
-            } else if (time.toLowerCase().equals("afternoon")) {
+            } else if (time.equals("afternoon")) {
                 labTwo.getAfternoon().setName("");
                 labTwo.getAfternoon().setEnrollment(0);
                 return "Reservation removed!";
@@ -218,11 +230,11 @@ public class LabManager {
                 return "Error. Invalid time.";
             }
         } else if (labThree.getLocation().equals(location)) {
-            if (time.toLowerCase().equals("morning")) {
+            if (time.equals("morning")) {
                 labThree.getMorning().setName("");
                 labThree.getMorning().setEnrollment(0);
                 return "Reservation removed!";
-            } else if (time.toLowerCase().equals("afternoon")) {
+            } else if (time.equals("afternoon")) {
                 labThree.getAfternoon().setName("");
                 labThree.getAfternoon().setEnrollment(0);
                 return "Reservation removed!";
@@ -236,11 +248,79 @@ public class LabManager {
     }
     
     /**
-     * TODO: F
-     * @return
+     * Modifies a reservation for the lab at the specified location and time.
+     *  
+     * @param location The location of the lab.
+     * @param time The time of the lab.
+     * @param name The name of the lab.
+     * @param enrollment The number of students enrolling in a lab; may not exceed lab capacity.
+     * 
+     * @return A message indicating the success or failure of the operation.
      */
-    public String modifyReservation() {
-        return "";
+    public String modifyReservation(String location, String time, String name, int enrollment) {
+    	if (labOne.getLocation().equals(location))  {
+            if (time.equals("morning")) {
+                if (enrollment < labOne.getCapacity()) {
+                    labOne.getMorning().setName(name);
+                    labOne.getMorning().setEnrollment(enrollment);
+                    return "Reservation modified!";
+                } else {
+                    return "Error. Capacity exceeded";
+                }
+            } else if (time.equals("afternoon")) {
+                if (enrollment < labOne.getCapacity()) {
+                    labOne.getAfternoon().setName(name);
+                    labOne.getAfternoon().setEnrollment(enrollment);
+                    return "Reservation modified!.";
+                } else {
+                    return "Error. Capacity exceeded";
+                }
+            } else {
+                return "Error. Invalid time.";
+            }
+        } else if (labTwo.getLocation().equals(location)) {
+            if (time.equals("morning")) {
+                if (enrollment < labTwo.getCapacity()) {
+                    labTwo.getMorning().setName(name);
+                    labTwo.getMorning().setEnrollment(enrollment);
+                    return "Reservation modified!";
+                } else {
+                    return "Error. Capacity exceeded";
+                }
+            } else if (time.equals("afternoon")) {
+                if (enrollment < labTwo.getCapacity()) {
+                    labTwo.getAfternoon().setName(name);
+                    labTwo.getAfternoon().setEnrollment(enrollment);
+                    return "Reservation modified!";
+                } else {
+                    return "Error. Capacity exceeded";
+                }
+            } else {
+                return "Error. Invalid time.";
+            }
+        } else if (labThree.getLocation().equals(location)) {
+            if (time.equals("morning")) {
+                if (enrollment < labThree.getCapacity()) {
+                    labThree.getMorning().setName(name);
+                    labThree.getMorning().setEnrollment(enrollment);
+                    return "Reservation modified!";
+                } else {
+                    return "Error. Capacity exceeded";
+                }
+            } else if (time.equals("afternoon")) {
+                if (enrollment < labThree.getCapacity()) {
+                    labThree.getAfternoon().setName(name);
+                    labThree.getAfternoon().setEnrollment(enrollment);
+                    return "Reservation modified!";
+                } else {
+                    return "Error. Capacity exceeded";
+                }
+            } else {
+                return "Error. Invalid time.";
+            }
+        } else {
+            return "Error. Invalid location.";
+        }
     }
 
     /**String representation of the LabManager Object.

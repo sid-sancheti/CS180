@@ -4,7 +4,7 @@ package Project02;
  * Class representation of two lab sessions.
  * 
  * @author Siddharth Sancheti, Section 33
- * @version October 4, 2023 
+ * @version October 7, 2023 
  *
  */
 public class Lab {
@@ -86,8 +86,6 @@ public class Lab {
      * If a session is not reserved for either of the available times, 
      * do not include the toString for that session. Instead, add "Available". 
      * 
-     * TODO: Determine whether or not to follow the edge case; the sample walk through in the READ.ME does something
-     * different than what the guidelines for this method say.
      * 
      * @return String representation of the Lab Object
      */

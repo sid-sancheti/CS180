@@ -1,14 +1,12 @@
 package Project02;
-
 import java.util.Scanner;
-
 /**
  * Project 02 - TimeKeeper
  * 
  * Writing a lab management application.
  * 
  * @author Siddharth Sancheti, Section 33
- * @version October 4, 2023
+ * @version October 7, 2023
  * 
  * 
  */
@@ -102,16 +100,60 @@ public class TimeKeeper {
     		if (input == 1) {
     			printLabSchedule(labManager);
     		} else if (input == 2) {
-    			
+    			System.out.println(labManager.listAvailableLabs());
     		} else if (input == 3) {
-    			
+    			System.out.println(labManager.listReservedLabs());
     		} else if (input == 4) {
+    			System.out.println(labLocationPrompt);
+    			String location = scan.nextLine();
+    			System.out.println(reservationTimePrompt);
+    			String time = scan.nextLine();
+    			System.out.println(reservationNamePrompt);
+    			String name = scan.nextLine();
+    			System.out.println(reservationEnrollmentPrompt);
+    			int enrollment = scan.nextInt();
+    			scan.nextLine();
     			
+    			System.out.println(labManager.addReservation(location, time, name, enrollment));
     		} else if (input == 5) {
+    			System.out.println(labLocationPrompt);
+    			String location = scan.nextLine();
+    			System.out.println(reservationTimePrompt);
+    			String time = scan.nextLine();
     			
+    			System.out.println(labManager.removeReservation(location, time));
     		} else if (input == 6) {
+    			System.out.println(labLocationPrompt);
+    			String location = scan.nextLine();
+    			System.out.println(reservationTimePrompt);
+    			String time = scan.nextLine();
+    			System.out.println(reservationNameUpdate);
+    			String name = scan.nextLine();
+    			System.out.println(reservationEnrollmentUpdate);
+    			int enrollment = scan.nextInt();
+    			scan.nextLine();
     			
+    			System.out.println(labManager.modifyReservation(location, time, name, enrollment));
     		} else if (input == 7) {
+    			// This will require its own infinite loop.
+    			while (true) {
+    				System.out.println(statisticsMenu);
+    				input = scan.nextInt();
+    				scan.nextLine();
+    				
+    				if (input == 1) {
+    					System.out.println(totalCapacity + labManager.calculateTotalCapacity());
+    				} else if (input == 2) {
+    					System.out.printf(totalUtilization + "%.2f\n", labManager.calculateTotalUtilization());
+    				} else if (input == 3) {
+    					System.out.println(availableSeats + labManager.calculateAvailableSeats());
+    				} else if (input == 4) {
+    					break;
+    				} else
+    					errorMessage();
+    					
+    			}
+    			
     			
     		} else if (input == 8) {
     			// Terminate the program and print the exit message.
@@ -125,13 +167,17 @@ public class TimeKeeper {
     	System.out.println(exitMessage);
     }
     
+    /**Ongoing Menu -> 1
+     * Prints the toString for all the labs in labManager
+     * 
+     * @param labManager The LabManager responsible for managing the labs.
+     */
     public static void printLabSchedule(LabManager labManager) {
     	System.out.println("\n" + labManager.getLabOne().toString());
     	System.out.println(labManager.getLabTwo().toString());
-    	System.out.println(labManager.getLabThree().toString());
-
-    	
+    	System.out.println(labManager.getLabThree().toString());	
     }
+    
     
     /**
      * Prints the error message for an invalid input.

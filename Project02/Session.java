@@ -4,7 +4,7 @@ package Project02;
  * Class representation of a lab session.
  * 
  * @author Siddharth Sancheti, Section 33
- * @version October 4, 2023
+ * @version October 7, 2023
  *
  */
 public class Session {
@@ -36,7 +36,7 @@ public class Session {
      * If there is enrollment in the class, print the name and enrollment of the class.
      * Otherwise, mention that the Session is available.
      * 
-     * The string will have whitespaces between commas.
+     * The string will have white spaces between commas.
      * 
      * TODO: Determine what to print if name = "" and enrollment = 0.
      * 

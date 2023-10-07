@@ -1,4 +1,12 @@
 package Project02;
+/**Lab.java
+ * 
+ * Class representation of two lab sessions.
+ * 
+ * @author Siddharth Sancheti, Section 33
+ * @version October 4, 2023 
+ *
+ */
 public class Lab {
     private Session morning;
     private Session afternoon;
@@ -19,22 +27,29 @@ public class Lab {
         this.location = location;
     }
 
-    // Make getters and setters for every field
+    // Morning session getter and setter
     public Session getMorning() { return morning; }
     public void setMorning(Session morning) { this.morning = morning; }
 
+    // Afternoon session getter and setter
     public Session getAfternoon() { return afternoon; }
     public void setAfternoon(Session afternoon) { this.afternoon = afternoon; }
 
+    // Lab capacity getter and setter
     public int getCapacity() { return capacity; }
     public void setCapacity(int capacity) { this.capacity = capacity; }
 
+    // Lab location getter and setter
     public String getLocation() { return location; }
     public void setLocation(String location) { this.location = location; }
 
-    /**
-     * TODO: Add Javadoc
-     * @return
+    /**String representation that documents the available sessions for this lab.
+     * 
+     * Note: A session is considered available if the enrollment is 0.
+     * This method could be used to test if the lab is fully booked.
+     * 'labObjectName'.listAvailablilies().equals("No Availabilities");
+     * 
+     * @return The available sessions for this lab.
      */
     public String listAvailabilities() {
         String result = "";
@@ -47,9 +62,13 @@ public class Lab {
         return result;
     }
 
-    /**
-     * TODO: Add Javadoc
+    /**Returns a String that documents the reserved sessions for this lab.
+     * 
+     * Note: A session is reserved if the enrollment > 0.
+     * This method could be used to test if the lab is completely available.
+     * 'labObjectName'.listAvailablilies().equals("No Reservations");
      * 	
+     * @return The reserved sessions for this lab.
      */
     public String listReservations() {
         String result = "";
@@ -62,20 +81,19 @@ public class Lab {
         return result;
     }
 
-    /**
-     * TODO: Add Javadoc
+    /**String representation of a Lab object.
+     * 
+     * If a session is not reserved for either of the available times, 
+     * do not include the toString for that session. Instead, add "Available". 
+     * 
+     * TODO: Determine whether or not to follow the edge case; the sample walk through in the READ.ME does something
+     * different than what the guidelines for this method say.
+     * 
+     * @return String representation of the Lab Object
      */
     public String toString() {
-        String result = "Lab{Capacity - " + capacity + ", Location - " + location + ", ";
-        if (morning.getEnrollment() > 0)
-            result += "Morning: " + morning.toString() + ", ";
-        else
-            result += "Morning: Available, "; // If there is no enrollment, return that the session is available.
-        if (afternoon.getEnrollment() > 0)
-            result += "Afternoon: " + afternoon.toString() + "}";
-        else
-            result += "Afternoon: Available}";
-        return result;
+        return "Lab{Capacity - " + capacity + ", Location - " + location + ", Morning: " + morning.toString() 
+        + ", Afternoon: " + afternoon.toString() + "}";
     }
     
 }

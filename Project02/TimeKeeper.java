@@ -1,12 +1,14 @@
 package Project02;
 
+import java.util.Scanner;
+
 /**
  * Project 02 - TimeKeeper
  * 
  * Writing a lab management application.
  * 
  * @author Siddharth Sancheti, Section 33
- * @version October 3, 2023
+ * @version October 4, 2023
  * 
  * 
  */
@@ -43,6 +45,98 @@ public class TimeKeeper {
     private static String exitMessage = "Thank you for using TimeKeeper!";
 
     public static void main(String[] args) {
+    	
+    	Scanner scan = new Scanner(System.in);
+    	
+    	LabManager labManager = null; // Declaring the variable here for scope.
+    	boolean condition;
+    	
+    	System.out.println(welcomePrompt);
+    	
+    	while (true) {
+	    	System.out.println(initializeMenu);
+	    	int input = scan.nextInt();
+	    	scan.nextLine();
+	    	
+	    	if (input == 1) {
+	    		condition = true;
+	    		
+	    		// Lab One Information
+	    		System.out.println(enterLabCapacity + "1: ");
+	    		int oneCapacity = scan.nextInt();
+	    		scan.nextLine();
+	    		System.out.println(enterLabLocation + "1: ");
+	    		String oneLocation = scan.nextLine();
+	    		
+	    		// Lab Two Information
+	    		System.out.println(enterLabCapacity + "2: ");
+	    		int twoCapacity = scan.nextInt();
+	    		scan.nextLine();
+	    		System.out.println(enterLabLocation + "2: ");
+	    		String twoLocation = scan.nextLine();
+	    		
+	    		// Lab Three Information
+	    		System.out.println(enterLabCapacity + "3: ");
+	    		int threeCapacity = scan.nextInt();
+	    		scan.nextLine();
+	    		System.out.println(enterLabLocation + "3: ");
+	    		String threeLocation = scan.nextLine();
+	    		
+	    		labManager = new LabManager(new Lab(oneCapacity, oneLocation), new Lab(twoCapacity, twoLocation),
+	    				new Lab(threeCapacity, threeLocation));
+	    		
+	    		break;
+	    	} else if (input == 2) {
+	    		condition = false;
+	    		break;
+	    	} else 
+	    		System.out.println(invalidInput);
+    	}
+    	
+    	// Main loop that controls the main application
+    	while (condition) {
+    		System.out.println(ongoingMenu);
+    		int input = scan.nextInt();
+    		scan.nextLine();
+    		
+    		if (input == 1) {
+    			printLabSchedule(labManager);
+    		} else if (input == 2) {
+    			
+    		} else if (input == 3) {
+    			
+    		} else if (input == 4) {
+    			
+    		} else if (input == 5) {
+    			
+    		} else if (input == 6) {
+    			
+    		} else if (input == 7) {
+    			
+    		} else if (input == 8) {
+    			// Terminate the program and print the exit message.
+    			condition = false; 
+    		} else {
+    			errorMessage();
+    		}
+    	}
+    	
+    	scan.close();
+    	System.out.println(exitMessage);
+    }
+    
+    public static void printLabSchedule(LabManager labManager) {
+    	System.out.println("\n" + labManager.getLabOne().toString());
+    	System.out.println(labManager.getLabTwo().toString());
+    	System.out.println(labManager.getLabThree().toString());
 
+    	
+    }
+    
+    /**
+     * Prints the error message for an invalid input.
+     */
+    public static void errorMessage() {
+    	System.out.println(invalidInput);
     }
 }

@@ -1,4 +1,12 @@
 package Project02;
+/**Session.java
+ * 
+ * Class representation of a lab session.
+ * 
+ * @author Siddharth Sancheti, Section 33
+ * @version October 4, 2023
+ *
+ */
 public class Session {
     private String name;
     private int enrollment;
@@ -15,7 +23,6 @@ public class Session {
         enrollment = 0;
     }
 
-
     // Setter and getter for the name
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -24,8 +31,19 @@ public class Session {
     public int getEnrollment() { return enrollment; }
     public void setEnrollment(int enrollment) { this.enrollment = enrollment; }
 
+    /**String representation of Session object.
+     * 
+     * If there is enrollment in the class, print the name and enrollment of the class.
+     * Otherwise, mention that the Session is available.
+     * 
+     * The string will have whitespaces between commas.
+     * 
+     * TODO: Determine what to print if name = "" and enrollment = 0.
+     * 
+     * @return The string representation of the Session.
+     */
     public String toString() {
-        return "Session{Name - " + name + ", Enrollment - " + enrollment + "}";
+        return (enrollment > 0) ? String.format("Session{Name - %s, Enrollment - %d}", name, enrollment) : "Available";
     }
 
 }

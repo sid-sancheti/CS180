@@ -1,4 +1,12 @@
 package Project02;
+/**LabManager.java
+ * 
+ * Class representation of three CS labs.
+ * 
+ * @author Siddharth Sancheti, Section 33
+ * @version October 4, 2023
+ *
+ */
 public class LabManager {
     private Lab labOne;
     private Lab labTwo;
@@ -227,17 +235,19 @@ public class LabManager {
         
     }
     
+    /**
+     * TODO: F
+     * @return
+     */
     public String modifyReservation() {
         return "";
     }
 
-    /**
-     * TODO: Finish method.
-     * We could utliize the toString() method from the Lab and session class.
+    /**String representation of the LabManager Object.
+     * 
+     * @return The string representation of the LabManager Object.
      */
     public String toString() {
-        String print = "{";
-        print += "Lab One: " + labOne.toString() + ", ";
-        return print;
+    	return String.format("LabManager{%s, %s, %s}", labOne.toString(), labTwo.toString(), labThree.toString());
     }
 }

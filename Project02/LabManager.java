@@ -36,27 +36,22 @@ public class LabManager {
      * @return The sum of the enrollment of all the labs.
      */
     public int calculateTotalCapacity() {
-        return labOne.getMorning().getEnrollment() + labOne.getAfternoon().getEnrollment() + 
-        labTwo.getMorning().getEnrollment() + labTwo.getAfternoon().getEnrollment() + 
-        labThree.getMorning().getEnrollment() + labThree.getAfternoon().getEnrollment();
+        return (labOne.getCapacity() + labTwo.getCapacity() + labThree.getCapacity()) * 2;
     }
 
     /**
-     * Compute the average percentage of utlization for all the labs.
+     * Compute the average percentage of utilization for all the labs.
      * 
      * @return The average percentage utilization for all three labs
-     * 
-     * TODO: Need to fix.
      */
     public double calculateTotalUtilization() {
 
-        // Double check the math here.
-        double labOneUtilization = (double)(labOne.getMorning().getEnrollment() + labOne.getAfternoon().getEnrollment()) 
-        		/ (double)(labOne.getCapacity() * 2);
-        double labTwoUtiliation = (double)(labTwo.getMorning().getEnrollment() + labTwo.getAfternoon().getEnrollment()) 
-        		/ (double)(labTwo.getCapacity() * 2);
-        double labThreeUtilization = (double)(labThree.getMorning().getEnrollment() + labThree.getAfternoon().getEnrollment()) 
-        		/ (double)(labThree.getCapacity() * 2);
+        double labOneUtilization = (double)(labOne.getMorning().getEnrollment() + 
+        		labOne.getAfternoon().getEnrollment()) / (double) (labOne.getCapacity() * 2);
+        double labTwoUtiliation = (double)(labTwo.getMorning().getEnrollment() + 
+        		labTwo.getAfternoon().getEnrollment()) / (double) (labTwo.getCapacity() * 2);
+        double labThreeUtilization = (double)(labThree.getMorning().getEnrollment() + 
+        		labThree.getAfternoon().getEnrollment()) / (double) (labThree.getCapacity() * 2);
 
         return (labOneUtilization + labTwoUtiliation + labThreeUtilization) / 3d;
     }
@@ -66,7 +61,6 @@ public class LabManager {
      * 
      * @return The capacity minus the enrollment for all labs and their sessions.
      * 
-     * TODO: Need to fix.
      */
     public int calculateAvailableSeats() {
         int labOneAvailableSeats = (labOne.getCapacity() * 2) - (labOne.getMorning().getEnrollment() + 
@@ -125,13 +119,14 @@ public class LabManager {
      * @param name The name of the lab.
      * @param enrollment The number of students enrolling in a lab; may not exceed lab capacity.
      * 
+     * Fixed
      * @return A message indicating the success or failure of the operation.
      */
     public String addReservation(String location, String time, String name, int enrollment) {
         // Have to check which location and time matches the one passed to the method.
     	if (labOne.getLocation().equals(location))  {
             if (time.equals("morning")) {
-                if (labOne.getMorning().getEnrollment() < labOne.getCapacity()) {
+                if (enrollment < labOne.getCapacity()) {
                     labOne.getMorning().setName(name);
                     labOne.getMorning().setEnrollment(enrollment);
                     return "Reservation added!";
@@ -244,7 +239,6 @@ public class LabManager {
         } else {
             return "Error. Invalid location";
         }
-        
     }
     
     /**

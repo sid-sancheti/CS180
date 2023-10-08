@@ -38,8 +38,6 @@ public class Session {
      * 
      * The string will have white spaces between commas.
      * 
-     * TODO: Determine what to print if name = "" and enrollment = 0.
-     * 
      * @return The string representation of the Session.
      */
     public String toString() {

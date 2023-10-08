@@ -178,7 +178,6 @@ public class TimeKeeper {
     	System.out.println(labManager.getLabThree().toString());	
     }
     
-    
     /**
      * Prints the error message for an invalid input.
      */

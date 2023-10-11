@@ -47,15 +47,14 @@ public class SortNames {
      * @param names The array list of names to write.
      * @throws FileNotFoundException
      */
-    public static void writeFile(String fileName, ArrayList<String> names) throws FileNotFoundException {
+    public static void writeFile(String fileName, ArrayList<String> names) throws FileNotFoundException { 
+    		
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(fileName))) {
             for (String name : names) { // For each name in the array list
                 pw.println(name); // Write the name to the file
             }
         } catch (FileNotFoundException e) {
             throw e; // Re-throw the FileNotFoundException
-        } catch (IOException e) {
-        	e.printStackTrace();
         } catch (Exception e) {
         	e.printStackTrace();
         }
@@ -72,7 +71,7 @@ public class SortNames {
         try {
             names = readFile(filename);
             Collections.sort(names);
-            writeFile(null, names);
+            writeFile("sorted_names.txt", names);
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
             return;

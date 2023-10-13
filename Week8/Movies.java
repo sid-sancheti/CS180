@@ -21,7 +21,7 @@ public class Movies {
     private static final String INVALID_DURATION = "Duration must be between 0 and 300";
     private static final String INVALID_YEAR = "Year must be before 2024";
     
-    private ArrayList<ArrayList<String>> lineList = new ArrayList<ArrayList<String>>(1);
+    private ArrayList<ArrayList<String>> lineList = new ArrayList<ArrayList<String>>();
 
     /**
      * Creates a new file called ratings.txt that contains all the movie titles and
@@ -126,13 +126,6 @@ public class Movies {
         return year >= 1000 && year <= 2023;
     }
     
-    /**
-     * Adds a line from the data textfile to the arrayList.
-     * Acts like a setter method.
-     * 
-     * @param line The line that needs to be added to the ArrayList.
-     */
-    public void appendLine(String line, int index) { lineList.get(index).add(line); }
     
     // ArrayList lineList getter method.
     public ArrayList<ArrayList<String>> getLineList() { return lineList; }
@@ -154,7 +147,7 @@ public class Movies {
 	            singleMovie.add(lineArray[3]);
 	            singleMovie.add(lineArray[5]);
 
-                movies.lineList.add(singleMovie);
+                movies.getLineList().add(singleMovie);
 
                 // Clear all the data from singleMovie so that it can be used again.
                 singleMovie.clear();

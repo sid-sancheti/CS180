@@ -11,8 +11,8 @@ import java.util.Scanner;
  * 
  * A program that reads movies from a text file, sorts them, then writes them to another text file.
  * 
- * @auther Siddharth Sancheti, Section 33
- * @version October 11, 2023
+ * @author Siddharth Sancheti, Section 33
+ * @version October 12, 2023
  */
 public class Movies {
 
@@ -21,19 +21,21 @@ public class Movies {
     private static final String INVALID_DURATION = "Duration must be between 0 and 300";
     private static final String INVALID_YEAR = "Year must be before 2024";
     
-    // TODO: Organize the data using a 2D ArrayList.
-    private ArrayList<ArrayList<String>> lineList = new ArrayList<ArrayList<String>>();
+    private ArrayList<ArrayList<String>> lineList = new ArrayList<ArrayList<String>>(1);
 
     /**
-     * Creates a new file called ratings.txt that contains all the movie titles and genres with the rating specified in the parameter.
+     * Creates a new file called ratings.txt that contains all the movie titles and
+     * genres with the rating specified in the parameter.
      * @param rating
      */
-    public void makeRatingFile(String rating) throws IOException{
+    public void makeRatingFile(String rating) throws IOException {
     	
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))) {
             for (ArrayList<String> movie : lineList) {
             	if (movie.get(2).equals(rating)) {
-            		bw.write(movie.get(0));
+            		bw.write(movie.get(0));	
+                    bw.newLine();
+                    bw.flush();
             	}		
             }
         } catch (IOException e) {
@@ -42,15 +44,19 @@ public class Movies {
     }
 
     public void makeScoreFile(double score, boolean greaterThan) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))) {
             for (ArrayList<String> movie : lineList) {
             	if (greaterThan) {
 	            	if (Double.parseDouble(movie.get(2)) > score) {
 	            		bw.write(movie.get(0));
+	            		bw.newLine();
+                        bw.flush();
 	            	}
             	} else {
             		if (Double.parseDouble(movie.get(2)) <= score) {
             			bw.write(movie.get(0));
+            			bw.newLine();
+                        bw.flush();
             		}
             	}
             }
@@ -60,15 +66,19 @@ public class Movies {
     }
 
     public void makeDurationFile(int duration, boolean greaterThan) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))) {
             for (ArrayList<String> movie : lineList) {
             	if (greaterThan) {
 	            	if (Double.parseDouble(movie.get(4)) > duration) {
 	            		bw.write(movie.get(0));
+	            		bw.newLine();
+                        bw.flush();
 	            	}
             	} else {
             		if (Double.parseDouble(movie.get(4)) <= duration) {
             			bw.write(movie.get(0));
+            			bw.newLine();
+                        bw.flush();
             		}
             	}
             }
@@ -78,12 +88,15 @@ public class Movies {
     }
 
     public void makeYearFile(int year) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))) {
             for (ArrayList<String> movie : lineList) {
             	if (Integer.parseInt(movie.get(1)) == year) {
             		bw.write(movie.get(0));
+            		bw.newLine();
+                    bw.flush();
             	}		
             }
+            System.out.println("Ratings.txt has been created and the contents have been written to it."); // TODO: Remove this line
         } catch (IOException e) {
         	e.printStackTrace();
         }
@@ -131,23 +144,22 @@ public class Movies {
         // Reading every line in the data file and storing it in an ArrayList
         try (BufferedReader bufReader = new BufferedReader(new FileReader("movieData.txt"))) {
 	        String line = bufReader.readLine();
-	        int index = 0;
 	        while (line != null) {
-	          String[] lineArray = line.split(",");
-	          String movieAndGenre = lineArray[0] + " | " + lineArray[3];
-	          String year = lineArray[1];
-	          String rating = lineArray[2];
-	          String duration = lineArray[4];
-	          String score = lineArray[5];
-	          
-	          movies.appendLine(movieAndGenre, index);
-	          movies.appendLine(year, index);
-	          movies.appendLine(rating, index);
-	          movies.appendLine(duration, index);
-	          movies.appendLine(score, index);
-	          
-	          line = bufReader.readLine();
-	          ++index;
+                
+                ArrayList<String> singleMovie = new ArrayList<String>();
+	            String[] lineArray = line.split(",");
+	            singleMovie.add(lineArray[0] + " | " + lineArray[4]);
+	            singleMovie.add(lineArray[1]);
+	            singleMovie.add(lineArray[2]);
+	            singleMovie.add(lineArray[3]);
+	            singleMovie.add(lineArray[5]);
+
+                movies.lineList.add(singleMovie);
+
+                // Clear all the data from singleMovie so that it can be used again.
+                singleMovie.clear();
+                // Read the next line.
+	            line = bufReader.readLine();
 	        }
         } catch (FileNotFoundException e) {
         	e.printStackTrace();

@@ -28,10 +28,10 @@ public class Movies {
      * genres with the rating specified in the parameter.
      * @param rating
      */
-    public void makeRatingFile(String rating) throws IOException {
+    public void makeRatingFile(String rating, ArrayList<ArrayList<String>> lineListPointer) throws IOException {
     	
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))) {
-            for (ArrayList<String> movie : lineList) {
+            for (ArrayList<String> movie : lineListPointer) {
             	if (movie.get(2).equals(rating)) {
             		bw.write(movie.get(0));	
                     bw.newLine();
@@ -127,16 +127,21 @@ public class Movies {
     }
     
     
-    // ArrayList lineList getter method.
+    // ArrayList lineList getter and setter method.
     public ArrayList<ArrayList<String>> getLineList() { return lineList; }
-    
+    public void addLine(ArrayList<String> line) { lineList.add(line); }
 
+    /**
+     * I have determined the issue. Outside the try-catch statement, the data gets lost. 
+     * Let's add all the method calls for makeFiles into the try-catch statement
+     */
     public static void main(String[] args) throws IOException {
         Movies movies = new Movies();
         
         // Reading every line in the data file and storing it in an ArrayList
         try (BufferedReader bufReader = new BufferedReader(new FileReader("movieData.txt"))) {
 	        String line = bufReader.readLine();
+            int i = 0; // TODO: Remove this line
 	        while (line != null) {
                 
                 ArrayList<String> singleMovie = new ArrayList<String>();
@@ -147,12 +152,15 @@ public class Movies {
 	            singleMovie.add(lineArray[3]);
 	            singleMovie.add(lineArray[5]);
 
-                movies.getLineList().add(singleMovie);
+                movies.addLine(singleMovie);
+
+                System.out.println(movies.getLineList().get(i)); // TODO: Remove this line
 
                 // Clear all the data from singleMovie so that it can be used again.
                 singleMovie.clear();
                 // Read the next line.
 	            line = bufReader.readLine();
+                i++; // TODO: Remove this line
 	        }
         } catch (FileNotFoundException e) {
         	e.printStackTrace();
@@ -162,6 +170,13 @@ public class Movies {
         	e.printStackTrace();
         }
         
+        // TODO: Remove the bottom five lines.
+        ArrayList<ArrayList<String>> replica = movies.getLineList();
+        System.out.println("\nThis is the replicas:");
+        for (ArrayList<String> movie : replica) {
+            System.out.println(movie);
+        }
+
         Scanner scan = new Scanner(System.in); 
         
         System.out.println("Enter Movie Rating:");     
@@ -191,7 +206,13 @@ public class Movies {
         	e.printStackTrace();
         }
         
-        movies.makeRatingFile(rating);
+        rating = "PG";
+        duration = 100;
+        greaterThan = false;
+        year = 2010;
+        score = 8.9;
+
+        movies.makeRatingFile(rating, movies.getLineList());
         movies.makeDurationFile(duration, greaterThan);
         movies.makeScoreFile(score, greaterThan);
         movies.makeYearFile(year);

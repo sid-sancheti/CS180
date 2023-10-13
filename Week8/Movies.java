@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
 /**Movies.java
  * 
  * A program that reads movies from a text file, sorts them, then writes them to another text file.
@@ -28,7 +29,7 @@ public class Movies {
      * genres with the rating specified in the parameter.
      * @param rating
      */
-    public void makeRatingFile(String rating, ArrayList<ArrayList<String>> lineListPointer) throws IOException {
+    public void makeRatingFile(String rating) throws IOException {
     	
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))) {
             for (ArrayList<String> movie : lineListPointer) {
@@ -136,83 +137,90 @@ public class Movies {
      * Let's add all the method calls for makeFiles into the try-catch statement
      */
     public static void main(String[] args) throws IOException {
-        Movies movies = new Movies();
-        
-        // Reading every line in the data file and storing it in an ArrayList
-        try (BufferedReader bufReader = new BufferedReader(new FileReader("movieData.txt"))) {
-	        String line = bufReader.readLine();
-            int i = 0; // TODO: Remove this line
-	        while (line != null) {
-                
-                ArrayList<String> singleMovie = new ArrayList<String>();
-	            String[] lineArray = line.split(",");
-	            singleMovie.add(lineArray[0] + " | " + lineArray[4]);
-	            singleMovie.add(lineArray[1]);
-	            singleMovie.add(lineArray[2]);
-	            singleMovie.add(lineArray[3]);
-	            singleMovie.add(lineArray[5]);
-
-                movies.addLine(singleMovie);
-
-                System.out.println(movies.getLineList().get(i)); // TODO: Remove this line
-
-                // Clear all the data from singleMovie so that it can be used again.
-                singleMovie.clear();
-                // Read the next line.
-	            line = bufReader.readLine();
-                i++; // TODO: Remove this line
-	        }
-        } catch (FileNotFoundException e) {
-        	e.printStackTrace();
-        } catch (IOException e) {
-        	e.printStackTrace();
-        } catch (Exception e) {
-        	e.printStackTrace();
-        }
-        
-        // TODO: Remove the bottom five lines.
-        ArrayList<ArrayList<String>> replica = movies.getLineList();
-        System.out.println("\nThis is the replicas:");
-        for (ArrayList<String> movie : replica) {
-            System.out.println(movie);
-        }
-
         Scanner scan = new Scanner(System.in); 
         
         System.out.println("Enter Movie Rating:");     
-        String rating = scan.nextLine();
+        String rating = "PG";
+        // scan.nextLine();
         
         System.out.println("Enter Movie Duration:"); 
-        int duration = scan.nextInt(); 
-        scan.nextLine();
+        int duration = 100;
+        // scan.nextInt(); 
+        // scan.nextLine();
         
         System.out.println("Enter Movie Score:"); 
-        double score = scan.nextDouble(); 
-        scan.nextLine();
+        double score = 7.8;
+        // scan.nextDouble(); 
+        // scan.nextLine();
         
         System.out.println("Will the filter be greater or less than?");
-        boolean greaterThan = scan.nextBoolean(); 
-        scan.nextLine();
+        boolean greaterThan = false;
+        // scan.nextBoolean(); 
+        // scan.nextLine();
         
         System.out.println("Enter Movie Year: ");
-        int year = scan.nextInt(); 
-        scan.nextLine();
+        int year = 2010;
+        // scan.nextInt(); 
+        // scan.nextLine();
 
         scan.close();
 
-        try { // validateInput method will throw an exception. Catch the exception and deal with it.
+        Movies movies = new Movies();
+
+        // Validate the inputs.
+        try {
         	movies.validateInput(rating, score, duration, year);
         } catch (InvalidInputException e) {
         	e.printStackTrace();
         }
-        
-        rating = "PG";
-        duration = 100;
-        greaterThan = false;
-        year = 2010;
-        score = 8.9;
 
-        movies.makeRatingFile(rating, movies.getLineList());
+        // Determine whether the data file exists.
+        File file = new File("movieData.txt");
+        if (!file.exists()) {
+        	throw new FileNotFoundException("movieData.txt does not exist.");
+        }
+
+        ArrayList<ArrayList<String>> mainList = new ArrayList<ArrayList<String>>();      
+        ArrayList<String> singleMovie = new ArrayList<String>();
+
+        // Reading every line in the data file and storing it in an ArrayList
+        BufferedReader bufReader = new BufferedReader(new FileReader("movieData.txt"));
+        
+	    String line = bufReader.readLine();
+        int i = 0; // TODO: Remove this line
+
+        // The issue was with the .clear() method. The pointer was removed.
+	    while (line != null) {
+                
+	        String[] lineArray = line.split(",");
+	        singleMovie.add(lineArray[0] + " | " + lineArray[4]);
+	        singleMovie.add(lineArray[1]);
+	        singleMovie.add(lineArray[2]);
+	        singleMovie.add(lineArray[3]);
+	        singleMovie.add(lineArray[5]);
+            mainList.add(singleMovie);
+
+            System.out.println(mainList.get(i)); // TODO: Remove this line
+
+            // Read the next line
+            line = bufReader.readLine();
+            // TODO: Remove this line
+            ++i;
+        }
+
+        // TODO: Remove the bottom four lines.
+        // ArrayList<ArrayList<String>> lineListPointer = mainList;
+        // for (ArrayList<String> aMovie : lineListPointer) {
+        //     System.out.println(aMovie);
+        // }
+
+        try {
+            bufReader.close();
+        } catch (IOException e) {
+           e.printStackTrace();
+        }
+
+        movies.makeRatingFile(rating);
         movies.makeDurationFile(duration, greaterThan);
         movies.makeScoreFile(score, greaterThan);
         movies.makeYearFile(year);

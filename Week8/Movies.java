@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Scanner;
 import java.io.File;
 /**Movies.java
@@ -180,39 +180,37 @@ public class Movies {
         	throw new FileNotFoundException("movieData.txt does not exist.");
         }
 
-        ArrayList<ArrayList<String>> mainList = new ArrayList<ArrayList<String>>();      
-        ArrayList<String> singleMovie = new ArrayList<String>();
-
         // Reading every line in the data file and storing it in an ArrayList
         BufferedReader bufReader = new BufferedReader(new FileReader("movieData.txt"));
         
-	    String line = bufReader.readLine();
-        int i = 0; // TODO: Remove this line
-
+        // Counter for the number of lines in the data file.
+        int lines = 0;
         // The issue was with the .clear() method. The pointer was removed.
-	    while (line != null) {
-                
-	        String[] lineArray = line.split(",");
-	        singleMovie.add(lineArray[0] + " | " + lineArray[4]);
-	        singleMovie.add(lineArray[1]);
-	        singleMovie.add(lineArray[2]);
-	        singleMovie.add(lineArray[3]);
-	        singleMovie.add(lineArray[5]);
-            mainList.add(singleMovie);
+	    while (bufReader.readLine() != null) { ++lines; }
+        // Close the bufReader cause we reached the end of the file.
+        bufReader.close();
 
+        // Make a new bufReader to read the file again.
+        bufReader = new BufferedReader(new FileReader("movieData.txt"));
+
+        ArrayList<List<String>> mainList = new ArrayList<List<String>>(lines);      
+        
+        for (int i = 0; i < lines; ++i) {
+            // Read a line from the file
+            String line = bufReader.readLine();
+            // Split the line into an array of strings based on the commas.
+            String[] lineArray = line.split(",");
+            // Add the line to the mainList.
+            mainList.add(Arrays.asList(lineArray[0] + " | " + lineArray[4], lineArray[1], lineArray[2],
+            lineArray[3], lineArray[5]));
             System.out.println(mainList.get(i)); // TODO: Remove this line
-
-            // Read the next line
-            line = bufReader.readLine();
-            // TODO: Remove this line
-            ++i;
         }
 
         // TODO: Remove the bottom four lines.
-        // ArrayList<ArrayList<String>> lineListPointer = mainList;
-        // for (ArrayList<String> aMovie : lineListPointer) {
-        //     System.out.println(aMovie);
-        // }
+        ArrayList<List<String>> lineListPointer = mainList;
+        for (List<String> aMovie : lineListPointer) {
+            System.out.println(aMovie);
+        }
 
         try {
             bufReader.close();

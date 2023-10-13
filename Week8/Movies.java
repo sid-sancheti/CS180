@@ -22,7 +22,7 @@ public class Movies {
     private static final String INVALID_DURATION = "Duration must be between 0 and 300";
     private static final String INVALID_YEAR = "Year must be before 2024";
     
-    private ArrayList<ArrayList<String>> lineList = new ArrayList<ArrayList<String>>();
+    private ArrayList<List<String>> lineList = new ArrayList<List<String>>();
 
     /**
      * Creates a new file called ratings.txt that contains all the movie titles and
@@ -32,7 +32,7 @@ public class Movies {
     public void makeRatingFile(String rating) throws IOException {
     	
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))) {
-            for (ArrayList<String> movie : lineListPointer) {
+            for (List<String> movie : this.lineList) {
             	if (movie.get(2).equals(rating)) {
             		bw.write(movie.get(0));	
                     bw.newLine();
@@ -46,15 +46,15 @@ public class Movies {
 
     public void makeScoreFile(double score, boolean greaterThan) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))) {
-            for (ArrayList<String> movie : lineList) {
+            for (List<String> movie : lineList) {
             	if (greaterThan) {
-	            	if (Double.parseDouble(movie.get(2)) > score) {
+	            	if (Double.parseDouble(movie.get(4)) > score) {
 	            		bw.write(movie.get(0));
 	            		bw.newLine();
                         bw.flush();
 	            	}
             	} else {
-            		if (Double.parseDouble(movie.get(2)) <= score) {
+            		if (Double.parseDouble(movie.get(4)) <= score) {
             			bw.write(movie.get(0));
             			bw.newLine();
                         bw.flush();
@@ -68,15 +68,15 @@ public class Movies {
 
     public void makeDurationFile(int duration, boolean greaterThan) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))) {
-            for (ArrayList<String> movie : lineList) {
+            for (List<String> movie : lineList) {
             	if (greaterThan) {
-	            	if (Double.parseDouble(movie.get(4)) > duration) {
+	            	if (Integer.parseInt(movie.get(3)) > duration) {
 	            		bw.write(movie.get(0));
 	            		bw.newLine();
                         bw.flush();
 	            	}
             	} else {
-            		if (Double.parseDouble(movie.get(4)) <= duration) {
+            		if (Integer.parseInt(movie.get(3)) <= duration) {
             			bw.write(movie.get(0));
             			bw.newLine();
                         bw.flush();
@@ -90,14 +90,13 @@ public class Movies {
 
     public void makeYearFile(int year) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))) {
-            for (ArrayList<String> movie : lineList) {
+            for (List<String> movie : lineList) {
             	if (Integer.parseInt(movie.get(1)) == year) {
             		bw.write(movie.get(0));
             		bw.newLine();
                     bw.flush();
             	}		
             }
-            System.out.println("Ratings.txt has been created and the contents have been written to it."); // TODO: Remove this line
         } catch (IOException e) {
         	e.printStackTrace();
         }
@@ -129,8 +128,8 @@ public class Movies {
     
     
     // ArrayList lineList getter and setter method.
-    public ArrayList<ArrayList<String>> getLineList() { return lineList; }
-    public void addLine(ArrayList<String> line) { lineList.add(line); }
+    public ArrayList<List<String>> getLineList() { return lineList; }
+    public void setLineList(ArrayList<List<String>> lineList) { this.lineList = lineList; }
 
     /**
      * I have determined the issue. Outside the try-catch statement, the data gets lost. 
@@ -203,15 +202,12 @@ public class Movies {
             // Add the line to the mainList.
             mainList.add(Arrays.asList(lineArray[0] + " | " + lineArray[4], lineArray[1], lineArray[2],
             lineArray[3], lineArray[5]));
-            System.out.println(mainList.get(i)); // TODO: Remove this line
         }
 
-        // TODO: Remove the bottom four lines.
-        ArrayList<List<String>> lineListPointer = mainList;
-        for (List<String> aMovie : lineListPointer) {
-            System.out.println(aMovie);
-        }
+        // Set the lineList
+        movies.setLineList(mainList);
 
+        // Closed the buffered reader.
         try {
             bufReader.close();
         } catch (IOException e) {

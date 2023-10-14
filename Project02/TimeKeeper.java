@@ -90,7 +90,7 @@ public class TimeKeeper {
 	    	} else 
 	    		System.out.println(invalidInput);
     	}
-    	
+		
     	// Main loop that controls the main application
     	while (condition) {
     		System.out.println(ongoingMenu);

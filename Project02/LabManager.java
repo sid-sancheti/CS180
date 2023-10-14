@@ -126,7 +126,7 @@ public class LabManager {
         // Have to check which location and time matches the one passed to the method.
     	if (labOne.getLocation().equals(location))  {
             if (time.equalsIgnoreCase("morning")) {
-                if (enrollment < labOne.getCapacity()) {
+                if (enrollment <= labOne.getCapacity()) {
                     labOne.getMorning().setName(name);
                     labOne.getMorning().setEnrollment(enrollment);
                     return "Reservation added!";
@@ -134,7 +134,7 @@ public class LabManager {
                     return "Error. Capacity exceeded";
                 }
             } else if (time.equalsIgnoreCase("afternoon")) {
-                if (enrollment < labOne.getCapacity()) {
+                if (enrollment <= labOne.getCapacity()) {
                     labOne.getAfternoon().setName(name);
                     labOne.getAfternoon().setEnrollment(enrollment);
                     return "Reservation added!.";
@@ -146,7 +146,7 @@ public class LabManager {
             }
         } else if (labTwo.getLocation().equals(location)) {
             if (time.equals("morning")) {
-                if (enrollment < labTwo.getCapacity()) {
+                if (enrollment <= labTwo.getCapacity()) {
                     labTwo.getMorning().setName(name);
                     labTwo.getMorning().setEnrollment(enrollment);
                     return "Reservation added!";

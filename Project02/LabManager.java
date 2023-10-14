@@ -45,15 +45,15 @@ public class LabManager {
      * @return The average percentage utilization for all three labs
      */
     public double calculateTotalUtilization() {
+        int totalCapacity = (labOne.getCapacity() * 2) + (labTwo.getCapacity() * 2) + (labThree.getCapacity() * 2);
+        int morningEnrollment = labOne.getMorning().getEnrollment() 
+          + labTwo.getMorning().getEnrollment() 
+          + labThree.getMorning().getEnrollment();
+        int afternoonEnrollment = labOne.getAfternoon().getEnrollment() + 
+          + labTwo.getAfternoon().getEnrollment() 
+          + labThree.getAfternoon().getEnrollment();
 
-        double labOneUtilization = (double)(labOne.getMorning().getEnrollment() + 
-        		labOne.getAfternoon().getEnrollment()) / (double) (labOne.getCapacity() * 2);
-        double labTwoUtiliation = (double)(labTwo.getMorning().getEnrollment() + 
-        		labTwo.getAfternoon().getEnrollment()) / (double) (labTwo.getCapacity() * 2);
-        double labThreeUtilization = (double)(labThree.getMorning().getEnrollment() + 
-        		labThree.getAfternoon().getEnrollment()) / (double) (labThree.getCapacity() * 2);
-
-        return (labOneUtilization + labTwoUtiliation + labThreeUtilization) / 3d;
+        return (double) (morningEnrollment + afternoonEnrollment) / totalCapacity;
     }
 
     /**
@@ -64,11 +64,11 @@ public class LabManager {
      */
     public int calculateAvailableSeats() {
         int labOneAvailableSeats = (labOne.getCapacity() * 2) - (labOne.getMorning().getEnrollment() + 
-        		labOne.getAfternoon().getEnrollment());
+        		  labOne.getAfternoon().getEnrollment());
         int labTwoAvailableSeats = (labTwo.getCapacity() * 2) - (labTwo.getMorning().getEnrollment() + 
-        		labTwo.getAfternoon().getEnrollment());
+        		  labTwo.getAfternoon().getEnrollment());
         int labThreeAvailableSeats = (labThree.getCapacity() * 2) - (labThree.getMorning().getEnrollment() + 
-        		labThree.getAfternoon().getEnrollment());
+        	      labThree.getAfternoon().getEnrollment());
 
         return labOneAvailableSeats + labTwoAvailableSeats + labThreeAvailableSeats;
     }
@@ -125,7 +125,7 @@ public class LabManager {
     public String addReservation(String location, String time, String name, int enrollment) {
         // Have to check which location and time matches the one passed to the method.
     	if (labOne.getLocation().equals(location))  {
-            if (time.equals("morning")) {
+            if (time.equalsIgnoreCase("morning")) {
                 if (enrollment < labOne.getCapacity()) {
                     labOne.getMorning().setName(name);
                     labOne.getMorning().setEnrollment(enrollment);
@@ -133,7 +133,7 @@ public class LabManager {
                 } else {
                     return "Error. Capacity exceeded";
                 }
-            } else if (time.equals("afternoon")) {
+            } else if (time.equalsIgnoreCase("afternoon")) {
                 if (enrollment < labOne.getCapacity()) {
                     labOne.getAfternoon().setName(name);
                     labOne.getAfternoon().setEnrollment(enrollment);
@@ -201,11 +201,11 @@ public class LabManager {
      */
     public String removeReservation(String location, String time) {
         if (labOne.getLocation().equals(location)) {
-            if (time.equals("morning")) {
+            if (time.equals("morning") && labOne.getMorning().getEnrollment() != 0) {
                 labOne.getMorning().setName("");
                 labOne.getMorning().setEnrollment(0);
                 return "Reservation removed!";
-            } else if (time.equals("afternoon")) {
+            } else if (time.equals("afternoon") && labOne.getAfternoon().getEnrollment() != 0) {
                 labOne.getAfternoon().setName("");
                 labOne.getAfternoon().setEnrollment(0);
                 return "Reservation removed!";
@@ -213,11 +213,11 @@ public class LabManager {
                 return "Error. Invalid time.";
             }
         } else if (labTwo.getLocation().equals(location)) {
-            if (time.equals("morning")) {
+            if (time.equals("morning") && labTwo.getMorning().getEnrollment() != 0) {
                 labTwo.getMorning().setName("");
                 labTwo.getMorning().setEnrollment(0);
                 return "Reservation removed!";
-            } else if (time.equals("afternoon")) {
+            } else if (time.equals("afternoon") && labTwo.getAfternoon().getEnrollment() != 0) {
                 labTwo.getAfternoon().setName("");
                 labTwo.getAfternoon().setEnrollment(0);
                 return "Reservation removed!";
@@ -225,11 +225,11 @@ public class LabManager {
                 return "Error. Invalid time.";
             }
         } else if (labThree.getLocation().equals(location)) {
-            if (time.equals("morning")) {
+            if (time.equals("morning") && labThree.getMorning().getEnrollment() != 0) {
                 labThree.getMorning().setName("");
                 labThree.getMorning().setEnrollment(0);
                 return "Reservation removed!";
-            } else if (time.equals("afternoon")) {
+            } else if (time.equals("afternoon") && labThree.getAfternoon().getEnrollment() != 0) {
                 labThree.getAfternoon().setName("");
                 labThree.getAfternoon().setEnrollment(0);
                 return "Reservation removed!";
@@ -253,7 +253,7 @@ public class LabManager {
      */
     public String modifyReservation(String location, String time, String name, int enrollment) {
     	if (labOne.getLocation().equals(location))  {
-            if (time.equals("morning")) {
+            if (time.equals("morning") && labOne.getMorning().getEnrollment() != 0) {
                 if (enrollment < labOne.getCapacity()) {
                     labOne.getMorning().setName(name);
                     labOne.getMorning().setEnrollment(enrollment);
@@ -261,7 +261,7 @@ public class LabManager {
                 } else {
                     return "Error. Capacity exceeded";
                 }
-            } else if (time.equals("afternoon")) {
+            } else if (time.equals("afternoon") && labOne.getAfternoon().getEnrollment() != 0) {
                 if (enrollment < labOne.getCapacity()) {
                     labOne.getAfternoon().setName(name);
                     labOne.getAfternoon().setEnrollment(enrollment);
@@ -273,7 +273,7 @@ public class LabManager {
                 return "Error. Invalid time.";
             }
         } else if (labTwo.getLocation().equals(location)) {
-            if (time.equals("morning")) {
+            if (time.equals("morning") && labTwo.getMorning().getEnrollment() != 0) {
                 if (enrollment < labTwo.getCapacity()) {
                     labTwo.getMorning().setName(name);
                     labTwo.getMorning().setEnrollment(enrollment);
@@ -281,7 +281,7 @@ public class LabManager {
                 } else {
                     return "Error. Capacity exceeded";
                 }
-            } else if (time.equals("afternoon")) {
+            } else if (time.equals("afternoon") && labTwo.getAfternoon().getEnrollment() != 0) {
                 if (enrollment < labTwo.getCapacity()) {
                     labTwo.getAfternoon().setName(name);
                     labTwo.getAfternoon().setEnrollment(enrollment);
@@ -293,7 +293,7 @@ public class LabManager {
                 return "Error. Invalid time.";
             }
         } else if (labThree.getLocation().equals(location)) {
-            if (time.equals("morning")) {
+            if (time.equals("morning") && labThree.getMorning().getEnrollment() != 0) {
                 if (enrollment < labThree.getCapacity()) {
                     labThree.getMorning().setName(name);
                     labThree.getMorning().setEnrollment(enrollment);
@@ -301,7 +301,7 @@ public class LabManager {
                 } else {
                     return "Error. Capacity exceeded";
                 }
-            } else if (time.equals("afternoon")) {
+            } else if (time.equals("afternoon") && labThree.getAfternoon().getEnrollment() != 0) {
                 if (enrollment < labThree.getCapacity()) {
                     labThree.getAfternoon().setName(name);
                     labThree.getAfternoon().setEnrollment(enrollment);

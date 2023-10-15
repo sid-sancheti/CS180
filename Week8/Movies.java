@@ -22,22 +22,16 @@ public class Movies {
     private static final String INVALID_DURATION = "Duration must be between 0 and 300";
     private static final String INVALID_YEAR = "Year must be before 2024";
     
-    private ArrayList<List<String>> lineList = new ArrayList<List<String>>();
-
     /**
      * Creates a new file called ratings.txt that contains all the movie titles and
      * genres with the rating specified in the parameter.
      * @param rating
      */
     public void makeRatingFile(String rating) throws IOException {
+        ArrayList<List<String>> lineList = readDataValue();
 
-    	File file = new File("ratings.txt");
-        if (file.exists()) {
-        	file.delete();
-        }
-
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt", true))) {
-            for (List<String> movie : this.lineList) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("ratings.txt"))) {
+            for (List<String> movie : lineList) {
             	if (movie.get(2).equals(rating)) {
             		bw.write(movie.get(0));	
                     bw.newLine();
@@ -49,7 +43,9 @@ public class Movies {
         }
     }
 
-    public void makeScoreFile(double score, boolean greaterThan) {
+    public void makeScoreFile(double score, boolean greaterThan) throws IOException {
+        ArrayList<List<String>> lineList = readDataValue();
+
         File file = new File("scores.txt");
         if (file.exists()) {
         	file.delete();
@@ -76,13 +72,10 @@ public class Movies {
         }
     }
 
-    public void makeDurationFile(int duration, boolean greaterThan) {
-        File file = new File("durations.txt");
-        if (file.exists()) {
-        	file.delete();
-        }
+    public void makeDurationFile(int duration, boolean greaterThan) throws IOException {
+        ArrayList<List<String>> lineList = readDataValue();
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("durations.txt", true))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("durations.txt"))) {
             for (List<String> movie : lineList) {
             	if (greaterThan) {
 	            	if (Integer.parseInt(movie.get(3)) > duration) {
@@ -103,14 +96,10 @@ public class Movies {
         }
     }
 
-    public void makeYearFile(int year) {
-        // Delete the file so we can start from scratch.
-        File file = new File("years.txt");
-        if (file.exists()) {
-        	file.delete();
-        }
+    public void makeYearFile(int year) throws IOException {
+        ArrayList<List<String>> lineList = readDataValue();
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("years.txt", true))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("years.txt"))) {
             for (List<String> movie : lineList) {
             	if (Integer.parseInt(movie.get(1)) == year) {
             		bw.write(movie.get(0));
@@ -127,7 +116,7 @@ public class Movies {
 
     	// Validate rating
     	if (!(rating.equals("G") || rating.equals("PG") || rating.equals("PG-13") || 
-    			rating.equals("R") || rating.equals("NR")))
+    			  rating.equals("R") || rating.equals("NR")))
     			throw new InvalidInputException(INVALID_RATING);
     	
     	// Validate score
@@ -147,10 +136,49 @@ public class Movies {
         return year >= 1000 && year <= 2023;
     }
     
-    
-    // ArrayList lineList getter and setter method.
-    public ArrayList<List<String>> getLineList() { return lineList; }
-    public void setLineList(ArrayList<List<String>> lineList) { this.lineList = lineList; }
+
+
+    public ArrayList<List<String>> readDataValue() throws IOException {
+                // Determine whether the data file exists.
+        File file = new File("movieData.txt");
+        if (!file.exists()) {
+        	throw new FileNotFoundException("movieData.txt does not exist.");
+        }
+
+        // Reading every line in the data file and storing it in an ArrayList
+        BufferedReader bufReader = new BufferedReader(new FileReader("movieData.txt"));
+        
+        // Counter for the number of lines in the data file.
+        int lines = 0;
+        // The issue was with the .clear() method. The pointer was removed.
+	    while (bufReader.readLine() != null) { ++lines; }
+        // Close the bufReader cause we reached the end of the file.
+        bufReader.close();
+
+        // Make a new bufReader to read the file again.
+        bufReader = new BufferedReader(new FileReader("movieData.txt"));
+
+        ArrayList<List<String>> mainList = new ArrayList<List<String>>(lines);      
+        
+        for (int i = 0; i < lines; ++i) {
+            // Read a line from the file
+            String line = bufReader.readLine();
+            // Split the line into an array of strings based on the commas.
+            String[] lineArray = line.split(",");
+            // Add the line to the mainList.
+            mainList.add(Arrays.asList(lineArray[0] + " | " + lineArray[4], lineArray[1], lineArray[2],
+                lineArray[3], lineArray[5]));
+        }
+
+        // Closed the buffered reader.
+        try {
+            bufReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return mainList;
+    }
 
     /**
      * I have determined the issue. Outside the try-catch statement, the data gets lost. 
@@ -190,46 +218,6 @@ public class Movies {
         	e.printStackTrace();
         }
 
-        // Determine whether the data file exists.
-        File file = new File("movieData.txt");
-        if (!file.exists()) {
-        	throw new FileNotFoundException("movieData.txt does not exist.");
-        }
-
-        // Reading every line in the data file and storing it in an ArrayList
-        BufferedReader bufReader = new BufferedReader(new FileReader("movieData.txt"));
-        
-        // Counter for the number of lines in the data file.
-        int lines = 0;
-        // The issue was with the .clear() method. The pointer was removed.
-	    while (bufReader.readLine() != null) { ++lines; }
-        // Close the bufReader cause we reached the end of the file.
-        bufReader.close();
-
-        // Make a new bufReader to read the file again.
-        bufReader = new BufferedReader(new FileReader("movieData.txt"));
-
-        ArrayList<List<String>> mainList = new ArrayList<List<String>>(lines);      
-        
-        for (int i = 0; i < lines; ++i) {
-            // Read a line from the file
-            String line = bufReader.readLine();
-            // Split the line into an array of strings based on the commas.
-            String[] lineArray = line.split(",");
-            // Add the line to the mainList.
-            mainList.add(Arrays.asList(lineArray[0] + " | " + lineArray[4], lineArray[1], lineArray[2],
-                lineArray[3], lineArray[5]));
-        }
-
-        // Set the lineList
-        movies.setLineList(mainList);
-
-        // Closed the buffered reader.
-        try {
-            bufReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         movies.makeRatingFile(rating);
         movies.makeDurationFile(duration, greaterThan);

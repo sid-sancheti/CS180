@@ -145,6 +145,8 @@ public class Matrix {
         System.out.println("Enter number of columns:");
         cols = sc.nextInt();
 
+        sc.close();
+
         for (int i = 0; i < 2; i++) {
             System.out.println("Matrix No. " + (i + 1));
             System.out.println("Enter integers to be added to matrix");

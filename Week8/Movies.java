@@ -1,13 +1,12 @@
 package Week8;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.*;
-import java.util.Scanner;
 import java.io.File;
+import java.util.*;
 /**Movies.java
  * 
  * A program that reads movies from a text file, sorts them, then writes them to another text file.

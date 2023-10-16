@@ -4,6 +4,8 @@ package Project03;
  * 
  * Records data associated with a single company.
  * 
+ * @author Siddharth Sancheti, Section 33
+ * @version October 16, 2023
  */
 public class Company {
     private String name;    // name of company

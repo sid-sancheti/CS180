@@ -1,14 +1,13 @@
 package Project03;
 import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
 /**Includes all the logic used to process the files.
  * 
  * @author Siddharth Sancheti
  * @version October 16, 2023
  */
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-
 public class DataSystem {
     public static void main(String[] args) {
         String fileName = args[0];
@@ -54,5 +53,5 @@ public class DataSystem {
             e.printStackTrace();
         }
     }
-    
+
 }

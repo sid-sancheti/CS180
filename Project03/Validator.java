@@ -1,10 +1,11 @@
 package Project03;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.regex.PatternSyntaxException;
 
-/**Used to validate the data stored in the input log file.
+/**Validator.java
+ * 
+ * Used to validate the data stored in the input log file.
  * 
  * @author Siddharth Sancheti, Section 33
  * @version October 16, 2023
@@ -27,17 +28,17 @@ public class Validator {
             }
 
             if (split[0].equals("Max")) {
-                if(valueType.equals("MaxValue"))
+                if (valueType.equals("MaxValue"))
                     return Integer.parseInt(split[1]);
                 else
                     throw new WrongFormatException("Invalid " + valueType + " error");
             } else if (split[0].equals("Min")) {
-                if(valueType.equals("MinValue"))
+                if (valueType.equals("MinValue"))
                     return Integer.parseInt(split[1]);
                 else
                     throw new WrongFormatException("Invalid " + valueType + " error");
             } else if (split[0].equals("CompanyNumber")) {
-                if(valueType.equals("CompanyNumberValue"))
+                if (valueType.equals("CompanyNumberValue"))
                     return Integer.parseInt(split[1]);
                 else
                     throw new WrongFormatException("Invalid " + valueType + " error");
@@ -53,7 +54,7 @@ public class Validator {
         }
     }
 
-    public static void checkFile(String fileName) throws FileNotFoundException{
+    public static void checkFile(String fileName) throws FileNotFoundException {
         File file = new File(fileName);
         if (!file.exists())
             throw new FileNotFoundException("File: " + fileName + " is invalid");

@@ -9,7 +9,8 @@ import java.util.ArrayList;
  * @version October 16, 2023
  */
 public class Report {
-    private int minPrice, maxPrice;         // Minimum and maximum stock prices
+    private int minPrice; // Miniumum stock price
+    private int maxPrice; // Maximum stock price
     private ArrayList<Company> companyList; // A list of all the companies to be processed
 
     public Report(int minPrice, int maxPrice, ArrayList<Company> companyList) {
@@ -30,7 +31,7 @@ public class Report {
     public void generateReport() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("Report.txt"))) {
             for (int i = 0; i < companyList.size(); ++i) {
-                bw.write(companyList.get(i).getName());
+                bw.write(companyList.get(i).getName() + " Report");
                 bw.newLine();
                 bw.write(printExtremePrices(i));
             }
@@ -42,18 +43,27 @@ public class Report {
 
     /*
      * Generates an output file named "ReportMax.txt"
+     * 
      */
     public void generateReportMax() {
-        for (int i = 0; i < companyList.size(); ++i) {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter("ReportMax.txt"))) {
-                bw.write(companyList.get(i).getName() + "-" + maxPrice);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("ReportMax.txt"))) {
+            for (int i = 0; i < companyList.size(); ++i) {
+                int highestPrice = Integer.MIN_VALUE;
+                for (int j = 0; j < companyList.get(i).getPrices().length; ++j) {
+                    if (companyList.get(i).getPrices()[j] > highestPrice) {
+                        highestPrice = companyList.get(i).getPrices()[j];
+                    }
+                }
+                String companyName = companyList.get(i).getName() + "-" + highestPrice;
+                bw.write(companyName);
                 bw.newLine();
                 bw.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    }
+    }  
+    
 
     /*
      * Prints all the prices that exceed the minimum or maximum price.
@@ -63,11 +73,11 @@ public class Report {
      */
     private String printExtremePrices(int index) {
         String output = "";
-        for (int i = 1; i <= companyList.get(index).getPrices().length; ++i) {
-            if (companyList.get(index).getPrices()[i - 1] < minPrice) {
-                output += "Below Minimum Price at " + i + " with " + companyList.get(index).getPrices()[i - 1] + ".\n";
-            } else if (companyList.get(index).getPrices()[i - 1] > maxPrice) {
-                output += "Above Maximum Price at " + i + " with " + companyList.get(index).getPrices()[i - 1] + ".\n";
+        for (int i = 0; i < companyList.get(index).getPrices().length; ++i) {
+            if (companyList.get(index).getPrices()[i] < minPrice) {
+                output += "Below Minimum Price at " + i + " with " + companyList.get(index).getPrices()[i] + ".\n";
+            } else if (companyList.get(index).getPrices()[i] > maxPrice) {
+                output += "Above Maximum Price at " + i + " with " + companyList.get(index).getPrices()[i] + ".\n";
             }
         }
 
@@ -79,3 +89,4 @@ public class Report {
         return output;
     }
 }
+

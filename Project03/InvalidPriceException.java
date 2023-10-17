@@ -4,7 +4,7 @@ package Project03;
  * @author Siddhath Sancheti, Section 33
  * @version October 16, 2023
  */
-public class InvalidPriceException extends Exception{
+public class InvalidPriceException extends Exception {
     public InvalidPriceException(String message) {
         super(message);
     }

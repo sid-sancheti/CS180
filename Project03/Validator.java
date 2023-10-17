@@ -11,20 +11,22 @@ import java.util.regex.PatternSyntaxException;
  */
 public class Validator {
 
-    public static int checkPrice(int price) throws IllegalArgumentException{
+    public static int checkPrice(int price) throws InvalidPriceException {
         if (price < 0)
-            throw new IllegalArgumentException("Invalid Price Format: " + price);
+            throw new InvalidPriceException("Invalid Price Format: " + price);
         
         return price;
     }
 
 
-    public static int checkValueFormat(String line, String valueType) throws WrongFormatException{
+    public static int checkValueFormat(String line, String valueType) throws WrongFormatException {
         try {
             String[] split = line.split(":");
             if (split.length != 2)
                 throw new WrongFormatException("Invalid " + valueType + " error");
-            if (!split[0].equals(valueType))
+            if (!(split[0].equals("Max") && valueType.equals("MaxValue")) ||
+                !(split[0].equals("Min") && valueType.equals("MinValue")) ||
+                !(split[0].equals("CompanyNumber") && valueType.equals("CompanyNumberValue")))
                 throw new WrongFormatException("Invalid " + valueType + " error");
             
             return Integer.parseInt(split[1]);

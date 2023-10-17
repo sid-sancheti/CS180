@@ -22,15 +22,28 @@ public class Validator {
     public static int checkValueFormat(String line, String valueType) throws WrongFormatException {
         try {
             String[] split = line.split(":");
-            if (split.length != 2)
+            if (split.length != 2) {
                 throw new WrongFormatException("Invalid " + valueType + " error");
-            if (!(split[0].equals("Max") && valueType.equals("MaxValue")) ||
-                !(split[0].equals("Min") && valueType.equals("MinValue")) ||
-                !(split[0].equals("CompanyNumber") && valueType.equals("CompanyNumberValue")))
+            }
+
+            if (split[0].equals("Max")) {
+                if(valueType.equals("MaxValue"))
+                    return Integer.parseInt(split[1]);
+                else
+                    throw new WrongFormatException("Invalid " + valueType + " error");
+            } else if (split[0].equals("Min")) {
+                if(valueType.equals("MinValue"))
+                    return Integer.parseInt(split[1]);
+                else
+                    throw new WrongFormatException("Invalid " + valueType + " error");
+            } else if (split[0].equals("CompanyNumber")) {
+                if(valueType.equals("CompanyNumberValue"))
+                    return Integer.parseInt(split[1]);
+                else
+                    throw new WrongFormatException("Invalid " + valueType + " error");
+            } else
                 throw new WrongFormatException("Invalid " + valueType + " error");
             
-            return Integer.parseInt(split[1]);
-
         } catch (NullPointerException e) {      // Thrown by String.split()
             throw new WrongFormatException("Invalid " + valueType + " error");
         } catch (PatternSyntaxException e) {    // Thrown by String.split()

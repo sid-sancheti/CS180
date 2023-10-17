@@ -22,9 +22,9 @@ public class DataSystem {
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line = br.readLine();
-            int min = Validator.checkPrice(Validator.checkValueFormat(line, "MinValue"));
-            line = br.readLine();
             int max = Validator.checkPrice(Validator.checkValueFormat(line, "MaxValue"));
+            line = br.readLine();
+            int min = Validator.checkPrice(Validator.checkValueFormat(line, "MinValue"));
             line = br.readLine();
             int companyNumber = Validator.checkValueFormat(line, "CompanyNumberValue");
 
@@ -54,8 +54,5 @@ public class DataSystem {
             e.printStackTrace();
         }
     }
-
-    // TODO: Read the input file.
-
-    // TODO: Pass information to the correct class object and get the output.
+    
 }

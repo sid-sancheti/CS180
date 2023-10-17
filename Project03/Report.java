@@ -34,6 +34,7 @@ public class Report {
                 bw.newLine();
                 bw.write(printExtremePrices(i));
             }
+            bw.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,6 +48,7 @@ public class Report {
             try (BufferedWriter bw = new BufferedWriter(new FileWriter("ReportMax.txt"))) {
                 bw.write(companyList.get(i).getName() + "-" + maxPrice);
                 bw.newLine();
+                bw.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -62,10 +64,10 @@ public class Report {
     private String printExtremePrices(int index) {
         String output = "";
         for (int i = 1; i <= companyList.get(index).getPrices().length; ++i) {
-            if (companyList.get(index).getPrices()[i] < minPrice) {
-                output += "Below Minimum Price at " + i + " with " + companyList.get(index).getPrices()[i] + ".\n";
-            } else if (companyList.get(index).getPrices()[i] > maxPrice) {
-                output += "Above Maximum Price at " + i + " with " + companyList.get(index).getPrices()[i] + ".\n";
+            if (companyList.get(index).getPrices()[i - 1] < minPrice) {
+                output += "Below Minimum Price at " + i + " with " + companyList.get(index).getPrices()[i - 1] + ".\n";
+            } else if (companyList.get(index).getPrices()[i - 1] > maxPrice) {
+                output += "Above Maximum Price at " + i + " with " + companyList.get(index).getPrices()[i - 1] + ".\n";
             }
         }
 

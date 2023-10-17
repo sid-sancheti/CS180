@@ -1,0 +1,57 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "MainThread",
+            "request": "launch",
+            "mainClass": "CS180/Practice.MainThread",
+            "projectName": "src_62fe526c"
+        },
+        {
+            "type": "java",
+            "name": "DataSystem",
+            "request": "launch",
+            "mainClass": "CS180/Project03.DataSystem",
+            "projectName": "src_62fe526c",
+            "args": "Project03/input0.txt"
+        },
+        {
+            "type": "java",
+            "name": "VinGenerator",
+            "request": "launch",
+            "mainClass": "CS180/Week3.VinGenerator",
+            "projectName": "src_62fe526c"
+        },
+        {
+            "type": "java",
+            "name": "Matrix",
+            "request": "launch",
+            "mainClass": "CS180/Week7.Matrix",
+            "projectName": "src_62fe526c"
+        },
+        {
+            "type": "java",
+            "name": "Movies",
+            "request": "launch",
+            "mainClass": "CS180/Week8.Movies",
+            "projectName": "src_62fe526c"
+        },
+        {
+            "type": "java",
+            "name": "Test",
+            "request": "launch",
+            "mainClass": "CS180/Week8.Test",
+            "projectName": "src_62fe526c"
+        }
+    ]
+}

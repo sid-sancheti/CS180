@@ -1,0 +1,6 @@
+{
+    "java.classpath": [
+        "src",
+        "lib/junit-jupiter-api-1.10.0.jar"
+    ]
+}

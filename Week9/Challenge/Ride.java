@@ -1,7 +1,5 @@
 package Week9.Challenge;
-
 import java.util.Objects;
-
 /**Ride.java
  * 
  * Class representation of a ride in a park.
@@ -68,9 +66,9 @@ public class Ride {
         
         // Handle nulls safely using Objects.equals
         return Objects.equals(name, other.name) &&
-            Objects.equals(color, other.color) &&
-            minHeight == other.minHeight &&
-            maxRiders == other.maxRiders;
+          Objects.equals(color, other.color) &&
+          minHeight == other.minHeight &&
+          maxRiders == other.maxRiders;
     }
 
 

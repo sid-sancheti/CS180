@@ -35,7 +35,7 @@ public class Rollercoaster extends Ride {
           Objects.equals(getColor(), other.getColor()) &&
           getMinHeight() == other.getMinHeight() &&
           getMaxRiders() == other.getMaxRiders() &&
-          simulated == other.isSimulated();
+            simulated == other.isSimulated();
 
     }
 

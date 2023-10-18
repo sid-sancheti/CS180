@@ -38,7 +38,7 @@ public class Waterslide extends Ride {
           Objects.equals(getColor(), other.getColor()) &&
           getMinHeight() == other.getMinHeight() &&
           getMaxRiders() == other.getMaxRiders() &&
-          splashDepth == other.getSplashDepth();
+            splashDepth == other.getSplashDepth();
     }
 
     /**

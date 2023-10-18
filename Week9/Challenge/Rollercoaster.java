@@ -35,7 +35,7 @@ public class Rollercoaster extends Ride {
           Objects.equals(getColor(), other.getColor()) &&
           getMinHeight() == other.getMinHeight() &&
           getMaxRiders() == other.getMaxRiders() &&
-          simulated == other.simulated;
+          simulated == other.isSimulated();
 
     }
 
@@ -48,7 +48,7 @@ public class Rollercoaster extends Ride {
      */
     @Override
     public String toString() {
-        return String.format("Name: %s\nColor: %s\nMinimum Height: %d inches\nMaximum Riders: %d\nSimulated: %b\n",
+        return String.format("Name: %s\nColor: %s\nMinimum Height: %d inches\nMaximum Riders: %d\nSimulated: %b",
           getName(), getColor(), getMinHeight(), getMaxRiders(), simulated);
     }
 

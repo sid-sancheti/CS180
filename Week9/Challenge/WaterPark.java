@@ -21,7 +21,7 @@ public class WaterPark implements Park {
     private final double epsilon = 0.01;
     
     public WaterPark(String name, double admissionCost, double land, ArrayList<Ride> rides, boolean indoor, 
-      boolean outdoor, boolean lazyRiver, boolean wavePool, boolean[] seasons) {
+        boolean outdoor, boolean lazyRiver, boolean wavePool, boolean[] seasons) {
         this.name = name;
         this.admissionCost = admissionCost;
         this.land = land;
@@ -112,7 +112,9 @@ public class WaterPark implements Park {
      * @param newMaxRiders the new maximum number of riders
      * @param newSplashDepth new splash depth of the slide
      */
-    public void modifyRide(Ride ride, String newName, String newColor, int newMinHeight, int newMaxRiders, double newSplashDepth) {
+    public void modifyRide(Ride ride, String newName, String newColor, int newMinHeight, int newMaxRiders, 
+        double newSplashDepth) {
+            
         Waterslide newRide = new Waterslide(newName, newColor, newMinHeight, newMaxRiders, newSplashDepth);
 
         rides.set(rides.indexOf(ride), newRide);

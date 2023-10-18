@@ -18,7 +18,7 @@ public class Ride {
         this.color = "";
         this.name = "";
         this.maxRiders = 0;
-        minHeight =0;
+        minHeight = 0;
     }
 
     // Custom constructor
@@ -66,15 +66,15 @@ public class Ride {
         
         // Handle nulls safely using Objects.equals
         return Objects.equals(name, other.name) &&
-          Objects.equals(color, other.color) &&
-          minHeight == other.minHeight &&
-          maxRiders == other.maxRiders;
+            Objects.equals(color, other.color) &&
+            minHeight == other.minHeight &&
+            maxRiders == other.maxRiders;
     }
 
 
     public String toString() {
         return String.format("Name: %s\nColor: %s\nMin Height: %d inches\nMaxRiders: %d", name, color, minHeight, 
-          maxRiders);
+            maxRiders);
     }
     
     

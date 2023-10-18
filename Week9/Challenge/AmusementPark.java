@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * @version October 17, 2023
  * 
  */
-public class AmusementPark implements Park{
+public class AmusementPark implements Park {
     private double admissionCost;      // the admission cost of the park
     private boolean arcade;            // indicates whether the park has an arcade
     private boolean bowling;           // indicates whether the park has a bowling alley
@@ -21,7 +21,7 @@ public class AmusementPark implements Park{
 
     // Constructs a newly allocated AmusementPark object with the field values specified by the input parameters
     public AmusementPark(String name, double admissionCost, double land, ArrayList<Ride> rides, boolean indoor, 
-      boolean outdoor, boolean arcade, boolean bowling, boolean[] seasons) {
+        boolean outdoor, boolean arcade, boolean bowling, boolean[] seasons) {
         this.name = name;
         this.admissionCost = admissionCost;
         this.land = land;
@@ -35,11 +35,11 @@ public class AmusementPark implements Park{
 
     // Getter and setter for arcade
     public boolean isArcade() { return arcade; }
-   public void setArcade(boolean arcade) { this.arcade = arcade; }
+    public void setArcade(boolean arcade) { this.arcade = arcade; }
    
     // Getter and setter for bowling
     public boolean isBowling() { return bowling; }
-   public void setBowling(boolean bowling) { this.bowling = bowling; }
+    public void setBowling(boolean bowling) { this.bowling = bowling; }
    
     // Getter and setter for admissionCost
     public double getAdmissionCost() { return admissionCost; }
@@ -73,7 +73,7 @@ public class AmusementPark implements Park{
     * @param ride the ride to be removed from the list
     */
     public void removeRide(Ride ride) {
-       rides.remove(ride);
+        rides.remove(ride);
     }
    
     // Getter for rides
@@ -91,7 +91,7 @@ public class AmusementPark implements Park{
       SpaceFullException {
    
         if ((land + addedLand) - maxLand > epsilon) {
-           throw new SpaceFullException("There is no more land to use for this park!");
+            throw new SpaceFullException("There is no more land to use for this park!");
         } 
    
         // Add the new land to the current land
@@ -113,22 +113,21 @@ public class AmusementPark implements Park{
     * @param newSimulated determines whether the ride is simulated
     */
     public void modifyRide(Ride ride, String newName, String newColor, int newMinHeight, int newMaxRiders, 
-      boolean newSimulated) {
+        boolean newSimulated) {
         Rollercoaster newRide = new Rollercoaster(newName, newColor, newMinHeight, newMaxRiders, newSimulated);
         rides.set(rides.indexOf(ride), newRide);
     }
-
-       
+    
     public void close() {
-       name = "";
-       admissionCost = 0;
-       land = 0;
-       rides = null;
-       seasons = null;
-       indoor = false;
-       outdoor = false;
-       arcade = false;
-       bowling = false;
+        name = "";
+        admissionCost = 0;
+        land = 0;
+        rides = null;
+        seasons = null;
+        indoor = false;
+        outdoor = false;
+        arcade = false;
+        bowling = false;
     }
     
 }

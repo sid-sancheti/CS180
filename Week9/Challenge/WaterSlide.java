@@ -1,14 +1,11 @@
 package Week9.Challenge;
-
 import java.util.Objects;
-
 /**Waterslide.java
  * 
  * A waterslide class
  * 
  * @author Siddharth Sancheti, Section 33
  * @version October 17, 2023
- * @extends Ride
  */
 public class Waterslide extends Ride {
 

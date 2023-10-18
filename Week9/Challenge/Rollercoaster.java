@@ -6,8 +6,8 @@ import java.util.Objects;
  * 
  * @author Siddharth Sancheti, Section 33
  * @version October 17, 2023
- * @extends Ride
  */
+
 public class Rollercoaster extends Ride {
     private boolean simulated;  // whether or not the ride is simulated
 

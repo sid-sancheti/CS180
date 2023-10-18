@@ -27,6 +27,7 @@ public class WaterPark implements Park {
         this.land = land;
         this.rides = rides;
         this.indoor = indoor;
+        this.outdoor = outdoor;
         this.lazyRiver = lazyRiver;
         this.wavePool = wavePool;
         this.seasons = seasons;

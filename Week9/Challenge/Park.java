@@ -17,7 +17,7 @@ public interface Park {
      * @param ride the ride to be added to the end of the list
      * @throws WrongRideException indicates trying to add wrong type of ride
      */
-    void addRide(Ride ride);
+    void addRide(Ride ride) throws WrongRideException;
     /**
      * Removes the ride given as an input parameter from the list of rides
      * 
@@ -50,7 +50,8 @@ public interface Park {
      * 
      * @throws SpaceFullException message: "There is no more land to use for this park!"
      */
-    void enlarge(double addedLand, double maxLand, boolean addedIndoor, boolean addedOutdoor);
+    void enlarge(double addedLand, double maxLand, boolean addedIndoor, boolean addedOutdoor) throws 
+      SpaceFullException;
 
     /**
      * Returns the admission cost of the park

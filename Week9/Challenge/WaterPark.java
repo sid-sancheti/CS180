@@ -98,8 +98,8 @@ public class WaterPark implements Park {
         land += addedLand;
 
         // Set the indoor and outdoor variables accordingly
-        if (addedIndoor) { addedIndoor = true; }
-        if (addedOutdoor) { addedOutdoor = true; }
+        if (addedIndoor) { indoor = true; }
+        if (addedOutdoor) { outdoor = true; }
     }
     
     /**
@@ -114,7 +114,7 @@ public class WaterPark implements Park {
      */
     public void modifyRide(Ride ride, String newName, String newColor, int newMinHeight, int newMaxRiders, 
         double newSplashDepth) {
-            
+
         Waterslide newRide = new Waterslide(newName, newColor, newMinHeight, newMaxRiders, newSplashDepth);
 
         rides.set(rides.indexOf(ride), newRide);

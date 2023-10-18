@@ -98,8 +98,8 @@ public class AmusementPark implements Park {
         land += addedLand;
    
         // Set the indoor and outdoor variables accordingly
-        if (addedIndoor) { addedIndoor = true; }
-        if (addedOutdoor) { addedOutdoor = true; }
+        if (addedIndoor) { indoor = true; }
+        if (addedOutdoor) { outdoor = true; }
     }
        
     /**

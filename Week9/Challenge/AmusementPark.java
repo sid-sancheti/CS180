@@ -8,14 +8,14 @@ import java.util.ArrayList;
  */
 public class AmusementPark implements Park{
     private double admissionCost;      // the admission cost of the park
-    private boolean arcade;            // indicates whether or not the park has an arcade
-    private boolean bowling;           // indicates whether or not the park has a bowling alley
-    private boolean indoor;            // indicates whether or not the park has an indoor component
+    private boolean arcade;            // indicates whether the park has an arcade
+    private boolean bowling;           // indicates whether the park has a bowling alley
+    private boolean indoor;            // indicates whether the park has an indoor component
     private double land;               // the amount of land in the amusement park in acres
     private String name;               // the name of the amusement park
-    private boolean outdoor;           // indicates whether or not the park has an outdoor component
+    private boolean outdoor;           // indicates whether the park has an outdoor component
     private ArrayList<Ride> rides;     // the list of all the rides in the amusement park
-    private boolean[] seasons;         // indicates whether or not the park is open during each season
+    private boolean[] seasons;         // indicates whether the park is open during each season
 
     private final double epsilon = 0.01;
 
@@ -27,6 +27,7 @@ public class AmusementPark implements Park{
         this.land = land;
         this.rides = rides;
         this.indoor = indoor;
+        this.outdoor = outdoor;
         this.arcade = arcade;
         this.bowling = bowling;
         this.seasons = seasons;
@@ -53,16 +54,16 @@ public class AmusementPark implements Park{
    
    
     /**
-    * Adds a new ride to the end of the list of rides in the water park, a water park can only 
-    * have waterslides so throw a WrongRideException if the ride to be added is not a waterslide
+    * Adds a new ride to the end of the list of rides in the amusement park, an amusement park can only
+    * have rollercoasters so throw a WrongRideException if the ride to be added is not a rollercoaster
     * 
-    * @param the ride to be added to the end of the list
+    * @param ride ride to be added to the end of the list
     */
     public void addRide(Ride ride) throws WrongRideException {
-        if (ride instanceof Waterslide) {
+        if (ride instanceof Rollercoaster) {
             rides.add(ride);
         } else {
-            throw new WrongRideException("A water park can only have waterslide rides!");
+            throw new WrongRideException("An amusement park can only have rollercoaster rides!");
         }
     }
    
@@ -109,7 +110,7 @@ public class AmusementPark implements Park{
     * @param newColor the new color of the ride
     * @param newMinHeight the new minimum height
     * @param newMaxRiders the new maximum number of riders
-    * @param newSplashDepth new splash depth of the slide
+    * @param newSimulated determines whether the ride is simulated
     */
     public void modifyRide(Ride ride, String newName, String newColor, int newMinHeight, int newMaxRiders, 
       boolean newSimulated) {

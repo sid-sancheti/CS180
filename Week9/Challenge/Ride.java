@@ -73,7 +73,7 @@ public class Ride {
 
 
     public String toString() {
-        return String.format("Name: %s\nColor: %s\nMin Height: %d inches\nMax Riders: %d", name, color, minHeight, 
+        return String.format("Name: %s\nColor: %s\nMin Height: %d inches\nMaxRiders: %d", name, color, minHeight, 
           maxRiders);
     }
     

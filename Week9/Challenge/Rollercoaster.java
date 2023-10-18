@@ -1,7 +1,5 @@
 package Week9.Challenge;
-
 import java.util.Objects;
-
 /**Rollercoaster.java
  * 
  * A rollercoaster class

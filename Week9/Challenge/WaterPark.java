@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class WaterPark implements Park {
     private double admissionCost;      // the admission cost of the park
     private boolean lazyRiver;            // indicates whether or not the park has an arcade
-    private boolean Wavepool;           // indicates whether or not the park has a bowling alley
+    private boolean wavePool;           // indicates whether or not the park has a bowling alley
     private boolean indoor;            // indicates whether or not the park has an indoor component
     private double land;               // the amount of land in the amusement park in acres
     private String name;               // the name of the amusement park
@@ -28,7 +28,7 @@ public class WaterPark implements Park {
         this.rides = rides;
         this.indoor = indoor;
         this.lazyRiver = lazyRiver;
-        this.Wavepool = wavePool;
+        this.wavePool = wavePool;
         this.seasons = seasons;
     }
 
@@ -36,9 +36,9 @@ public class WaterPark implements Park {
     public boolean isLazyRiver() { return lazyRiver; }
     public void setLazyRiver(boolean lazyRiver) { this.lazyRiver = lazyRiver; }
 
-    // Getter and setter for Wavepool
-    public boolean isWavepool() { return Wavepool; }
-    public void setWavepool(boolean Wavepool) { this.Wavepool = Wavepool; }
+    // Getter and setter for wavePool
+    public boolean isWavePool() { return wavePool; }
+    public void setWavePool(boolean wavePool) { this.wavePool = wavePool; }
 
     // Getter and setter for admissionCost
     public double getAdmissionCost() { return admissionCost; }
@@ -126,6 +126,6 @@ public class WaterPark implements Park {
         indoor = false;
         outdoor = false;
         lazyRiver = false;
-        Wavepool = false;
+        wavePool = false;
     }
 }

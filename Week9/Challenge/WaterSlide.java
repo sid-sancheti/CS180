@@ -50,7 +50,6 @@ public class Waterslide extends Ride {
      */
     @Override
     public String toString() {
-        return String.format("Name: %s\nColor: %s\nMinHeight: %d inches\nMaxRiders: %d\nSplashDepth: %.1f feet",
-          getName(), getColor(), getMinHeight(), getMaxRiders(), splashDepth);
+        return String.format("%s\nSplashDepth: %.1f feet", super.toString(), splashDepth);
     }
 }

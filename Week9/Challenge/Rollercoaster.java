@@ -48,8 +48,7 @@ public class Rollercoaster extends Ride {
      */
     @Override
     public String toString() {
-        return String.format("Name: %s\nColor: %s\nMinHeight: %d inches\nMaxRiders: %d\nSimulated: %b",
-          getName(), getColor(), getMinHeight(), getMaxRiders(), simulated);
+        return String.format("%s\nSimulated: %b", super.toString(), simulated);
     }
 
 }

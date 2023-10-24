@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "PlayerDriver",
+            "request": "launch",
+            "mainClass": "CS180/Week10.Walkthrough.PlayerDriver",
+            "projectName": "src_62fe526c"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

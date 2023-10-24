@@ -5,8 +5,10 @@ class SecretThread extends Thread {
     public static int counter = 0;
 
     public void run() {
-        for (int i = 0; i < 1000; i++) {
-          counter++;
+        synchronized (gatekeeper) {
+            for (int i = 0; i < 1000; i++) {
+                counter++;
+            }
         }
     }
 }

@@ -1,39 +1,47 @@
 package Week10.Walkthrough;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Player {
 	private int x;	//x position of the player
-	private int y;	//y position of the player
+	private AtomicInteger y = new AtomicInteger();	//y position of the player
 	private int hp;		//health point of the player
+    private static Object lock = new Object();
 	
-	public Player(int x, int y, int hp){
+	public Player(int x, AtomicInteger y, int hp){
 		this.x = x;
 		this.y = y;
 		this.hp = hp;
 	}
 	
 	public void printPlayer(){
-		System.out.printf("x position:\t%d\ny position:\t%d\nhealth point:\t%d\n", x, y, hp);
+		System.out.printf("x position:\t%d\ny position:\t%s\nhealth point:\t%d\n", x, y, hp);
 	}
 	
-	public void moveLeft(){
+	public synchronized void moveLeft(){
 		x--;
 	}
-	public void moveRight(){
+	public synchronized void moveRight(){
 		x++;
 	}
 	
 	public void moveUp(){
-		y--;
+		y.getAndDecrement();
 	}
 	public void moveDown(){
-		y++;
+		y.getAndIncrement();
 	}
 	
 	public void loseHealth(){
-		hp--;
+        synchronized (lock) {
+            hp--;
+        }
 	}
+
 	public void gainHealth(){
-		hp++;
+        synchronized (lock) {
+            hp++;
+        }
 	}
 	
 }

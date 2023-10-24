@@ -1,7 +1,9 @@
 package Week10.Walkthrough;
+
+import java.util.concurrent.atomic.AtomicInteger;
 public class PlayerDriver {
 	public static void main(String[] args) throws InterruptedException{
-		Player player = new Player(0, 0, 5000);
+		Player player = new Player(0, new AtomicInteger(), 5000);
 		Thread decX = new Thread(new PlayerThread(player, Action.DECX));
 		Thread incX = new Thread(new PlayerThread(player, Action.INCX));
 		Thread decY = new Thread(new PlayerThread(player, Action.DECY));

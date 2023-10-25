@@ -32,6 +32,8 @@ public class MapNavigator extends Thread {
             while (!started) {
                 started = true;
                 createMap();
+                currentRow = 4;
+                currentColumn = 4;
             }
         }
 
@@ -42,15 +44,23 @@ public class MapNavigator extends Thread {
             while (line != null) {
                 int move = Integer.parseInt(line);
 
-                // Verify that the move is valid.
-                if (move > 4 || move < 1) {
-                    System.out.println("Error, invalid input!");
-                } else { // If move is valid, continue
-                    
-                }
-
-                line = br.readLine();
+                synchronized (lock) {
+                    if (move == 1) {
+                        moveLeft();
+                    } else if (move == 2) {
+                        moveRight();
+                    } else if (move == 3) {
+                        moveUp();
+                    } else if (move == 4) {
+                        moveDown();
+                    } else {
+                        System.out.println("Error, invalid input!");
+                    }
+                }                    
             }
+
+            line = br.readLine();
+
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -70,7 +80,7 @@ public class MapNavigator extends Thread {
     /**
      * Create the map.
      */
-    public synchronized void createMap() {
+    public void createMap() {
         for (int row = 0; row < 10; row++) {
             for (int column = 0; column < 10; column ++) {
                 // Set every point in the map to a space.
@@ -79,7 +89,7 @@ public class MapNavigator extends Thread {
         }
 
         // Set the starting position of the player.
-        map[4][4] = 'X';
+        map[currentRow][currentColumn] = 'X';
     }
 
     /**
@@ -87,11 +97,10 @@ public class MapNavigator extends Thread {
      * 
      * Does not to be synchronized in run method
      */
-    public synchronized void printMap() {
+    public synchronized void printMap(String direction) {
         System.out.println("Move Number: " + moveNumber);
         System.out.println("Player: " + playerNumber);
-        // TODO: Add the move direction
-        System.out.println("Move: " + "TODO");
+        System.out.println("Move: " + direction);
         for (int row = 0; row < 10; row++) {
             System.out.print("[");
             for (int column = 0; column < 10; column ++) {
@@ -110,6 +119,46 @@ public class MapNavigator extends Thread {
 
             System.out.println();
         }
+    }
+
+    // Moving up or down
+    public void moveUp() { 
+        currentRow--; 
+        // If -1, set to 9
+        currentRow %= 10;
+
+        // Update the 2D array and print the result
+        createMap();
+        printMap("Up");
+    }
+    public void moveDown() { 
+        currentRow++; 
+        // If 10, set to 0
+        currentRow %= 10;
+
+        // Update the 2D array and print the result
+        createMap();
+        printMap("Down");
+    }
+
+    // Moving left and right
+    public void moveLeft() { 
+        currentColumn--; 
+        // If -1, set to 9
+        currentColumn %= 10;
+
+        // Update the 2D array and print the result
+        createMap();
+        printMap("Left");
+    }
+    public void moveRight() { 
+        currentColumn++;
+        // If 10, set to 0
+        currentColumn %= 10;
+        
+        // Update the 2D array and print the result
+        createMap();
+        printMap("Right");
     }
 
     /**

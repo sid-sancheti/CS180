@@ -1,7 +1,12 @@
 package Week10.Challenge;
-
 import java.io.*;
-
+/**MapNavigator.java
+ * 
+ * Moves an object around a 10x10 grid; can have multiple players moving at the same time.
+ * 
+ * @author Siddharth Sancheti, Section 33
+ * @version 10/25/2023
+ */
 public class MapNavigator extends Thread {
     private static int currentRow;
     private static int currentColumn;
@@ -11,7 +16,7 @@ public class MapNavigator extends Thread {
     private int playerNumber;
     private String fileName;
 
-    private static final Object lock = new Object();
+    private static final Object LOCK = new Object();
 
     public MapNavigator(int playerNumber, String fileName) {
         this.playerNumber = playerNumber;
@@ -28,7 +33,7 @@ public class MapNavigator extends Thread {
         }
 
         // Only want one thread to create the map.
-        synchronized (lock) {
+        synchronized (LOCK) {
             while (!started) {
                 started = true;
                 currentRow = 4;
@@ -45,7 +50,7 @@ public class MapNavigator extends Thread {
             while (line != null) {
                 int move = Integer.parseInt(line);
 
-                synchronized (lock) {
+                synchronized (LOCK) {
                     if (move == 1) {
                         moveLeft();
                     } else if (move == 2) {
@@ -83,7 +88,7 @@ public class MapNavigator extends Thread {
      */
     public void createMap() {
         for (int row = 0; row < 10; row++) {
-            for (int column = 0; column < 10; column ++) {
+            for (int column = 0; column < 10; column++) {
                 // Set every point in the map to a space.
                 map[row][column] = ' ';
             }
@@ -104,7 +109,7 @@ public class MapNavigator extends Thread {
         System.out.println("Move: " + direction);
         for (int row = 0; row < 10; row++) {
             System.out.print("[");
-            for (int column = 0; column < 10; column ++) {
+            for (int column = 0; column < 10; column++) {
                 System.out.print(map[row][column]);
                 if (column == 9) {
                     System.out.println("]");
@@ -131,7 +136,7 @@ public class MapNavigator extends Thread {
         System.out.println("Welcome! Initial Map:");
         for (int row = 0; row < 10; row++) {
             System.out.print("[");
-            for (int column = 0; column < 10; column ++) {
+            for (int column = 0; column < 10; column++) {
                 System.out.print(map[row][column]);
                 if (column == 9) {
                     System.out.println("]");

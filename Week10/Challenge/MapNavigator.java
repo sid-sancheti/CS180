@@ -7,7 +7,7 @@ public class MapNavigator extends Thread {
     private static int currentColumn;
     private static int moveNumber;
     private static boolean started;
-    private static char[][] map;
+    private static char[][] map = new char[10][10];
     private int playerNumber;
     private String fileName;
 
@@ -31,9 +31,9 @@ public class MapNavigator extends Thread {
         synchronized (lock) {
             while (!started) {
                 started = true;
-                createMap();
                 currentRow = 4;
                 currentColumn = 4;
+                createMap();
             }
         }
 
@@ -56,11 +56,11 @@ public class MapNavigator extends Thread {
                     } else {
                         System.out.println("Error, invalid input!");
                     }
-                }                    
+                } 
+                
+                line = br.readLine();
             }
-
-            line = br.readLine();
-
+            
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -88,7 +88,7 @@ public class MapNavigator extends Thread {
             }
         }
 
-        // Set the starting position of the player.
+        // Set the position of the player.
         map[currentRow][currentColumn] = 'X';
     }
 
@@ -105,7 +105,7 @@ public class MapNavigator extends Thread {
             System.out.print("[");
             for (int column = 0; column < 10; column ++) {
                 System.out.print(map[row][column]);
-                if (column == 8) {
+                if (column == 9) {
                     System.out.println("]");
                 } else {
                     System.out.print("|");
@@ -123,10 +123,12 @@ public class MapNavigator extends Thread {
 
     // Moving up or down
     public void moveUp() { 
-        currentRow--; 
-        // If -1, set to 9
-        currentRow %= 10;
+        currentRow--;
+        if (currentRow == -1) {
+            currentRow = 9;
+        }
 
+        ++moveNumber;
         // Update the 2D array and print the result
         createMap();
         printMap("Up");
@@ -134,8 +136,10 @@ public class MapNavigator extends Thread {
     public void moveDown() { 
         currentRow++; 
         // If 10, set to 0
-        currentRow %= 10;
-
+        if (currentRow == 10)
+            currentRow = 0;
+        
+        ++moveNumber;
         // Update the 2D array and print the result
         createMap();
         printMap("Down");
@@ -145,8 +149,10 @@ public class MapNavigator extends Thread {
     public void moveLeft() { 
         currentColumn--; 
         // If -1, set to 9
-        currentColumn %= 10;
-
+        if (currentColumn == -1)
+            currentColumn = 9;
+        
+        ++moveNumber;
         // Update the 2D array and print the result
         createMap();
         printMap("Left");
@@ -154,8 +160,10 @@ public class MapNavigator extends Thread {
     public void moveRight() { 
         currentColumn++;
         // If 10, set to 0
-        currentColumn %= 10;
-        
+        if (currentColumn == 10)
+            currentColumn = 0;
+                
+        ++moveNumber;
         // Update the 2D array and print the result
         createMap();
         printMap("Right");

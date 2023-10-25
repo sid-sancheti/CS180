@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "CS180/Week10.Challenge.Main",
+            "projectName": "src_62fe526c"
+        },
+        {
+            "type": "java",
             "name": "MyThreadDebug",
             "request": "launch",
             "mainClass": "CS180/Week10.Debugging.MyThreadDebug",

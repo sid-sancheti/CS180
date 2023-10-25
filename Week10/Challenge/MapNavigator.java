@@ -34,6 +34,7 @@ public class MapNavigator extends Thread {
                 currentRow = 4;
                 currentColumn = 4;
                 createMap();
+                printMap();
             }
         }
 
@@ -60,7 +61,7 @@ public class MapNavigator extends Thread {
                 
                 line = br.readLine();
             }
-            
+
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -95,12 +96,39 @@ public class MapNavigator extends Thread {
     /**
      * Print the map.
      * 
-     * Does not to be synchronized in run method
+     * Updates as the position of the player changes.
      */
     public synchronized void printMap(String direction) {
         System.out.println("Move Number: " + moveNumber);
         System.out.println("Player: " + playerNumber);
         System.out.println("Move: " + direction);
+        for (int row = 0; row < 10; row++) {
+            System.out.print("[");
+            for (int column = 0; column < 10; column ++) {
+                System.out.print(map[row][column]);
+                if (column == 9) {
+                    System.out.println("]");
+                } else {
+                    System.out.print("|");
+                }
+            }
+
+            // Print the hyphens that separate the rows.
+            for (int i = 0; i < 21; i++) {
+                System.out.print("-");
+            }
+
+            System.out.println();
+        }
+    }
+
+    /**
+     * Print the map.
+     * 
+     * Initial map
+     */
+    public void printMap() {
+        System.out.println("Welcome! Initial Map:");
         for (int row = 0; row < 10; row++) {
             System.out.print("[");
             for (int column = 0; column < 10; column ++) {

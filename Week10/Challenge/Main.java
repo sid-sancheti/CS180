@@ -7,7 +7,9 @@ public class Main {
             new MapNavigator(1 , "Week10/Challenge/PlayerOneMoves.txt"), 
             new MapNavigator(2 , "Week10/Challenge/PlayerTwoMoves.txt"), 
             new MapNavigator(3 , "Week10/Challenge/PlayerThreeMoves.txt"), 
-              new MapNavigator(4 , "Week10/Challenge/PlayerFourMoves.txt")}; 
+            new MapNavigator(4 , "Week10/Challenge/PlayerFourMoves.txt"),
+            new MapNavigator(5 , "Week10/Challenge/PlayerFiveMoves.txt"),
+        }; 
     
             for (int i = 0; i < mapNavigators.length; i++) {
                 mapNavigators[i].start();

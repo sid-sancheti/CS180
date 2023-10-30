@@ -13,7 +13,7 @@ public class ColorMixer {
 
         System.out.print("Enter the filename of the color map.\r\n");
         String input = scan.nextLine();
-        
+
         try {
             Color[] colors = readFile(input);
 
@@ -43,7 +43,7 @@ public class ColorMixer {
             lineNumberReader.close();
 
             if (lines % 3 != 0) {
-                return null;
+                throw new IOException();
             }
 
             colors = new Color[lines / 3];
@@ -61,7 +61,7 @@ public class ColorMixer {
             }
             
         } catch (IOException ioe) {
-            ioe.printStackTrace();
+            System.out.println("Either the file doesn't exist or the file is in the wrong format!");
             return null;
         }
 

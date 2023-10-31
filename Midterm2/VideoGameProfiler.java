@@ -4,8 +4,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import Midterm2Practice.Color;
-
 public class VideoGameProfiler {
     public static final String INPUT_PROMPT = "What is the name of the file you would like to read from?";
     public static final String INPUT_ERROR = "The file doesn't exist!";

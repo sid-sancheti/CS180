@@ -25,6 +25,7 @@ public class VideoGameProfiler {
 
         // Terminate the program if the dataset is null
         if (dataset == null) {
+            scan.close();
             return;
         }
 

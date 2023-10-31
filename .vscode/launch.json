@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SimpleServer",
+            "request": "launch",
+            "mainClass": "CS180/Week11.Walkthrough.SimpleServer",
+            "projectName": "src_62fe526c"
+        },
+        {
+            "type": "java",
+            "name": "SimpleClient",
+            "request": "launch",
+            "mainClass": "CS180/Week11.Walkthrough.SimpleClient",
+            "projectName": "src_62fe526c"
+        },
+        {
+            "type": "java",
             "name": "VideoGameProfiler",
             "request": "launch",
             "mainClass": "CS180/Midterm2.VideoGameProfiler",
@@ -86,6 +100,13 @@
             "name": "Test",
             "request": "launch",
             "mainClass": "CS180/Week8.Test",
+            "projectName": "src_62fe526c"
+        },
+        {
+            "type": "java",
+            "name": "UniversityCardGUI",
+            "request": "launch",
+            "mainClass": "CS180/Week11.Walkthrough.UniversityCardGUI",
             "projectName": "src_62fe526c"
         }
     ]

@@ -2,8 +2,6 @@ package Midterm2Practice;
 
 import java.util.Objects;
 
-import Week9.Challenge.Rollercoaster;
-
 public class Person implements Identifiable {
     private final String name;
     private final int age;

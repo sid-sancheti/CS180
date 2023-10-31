@@ -26,7 +26,7 @@ public class VideoGameProfiler {
         // Terminate the program if the dataset is null
         if (dataset == null) {
             return;
-        } 
+        }
 
         System.out.println(THRESHOLD_PROMPT);
         double threshold = scan.nextDouble();
@@ -45,12 +45,6 @@ public class VideoGameProfiler {
     public static String[] readFile(String filename)  {
         String[] dataset = null;
 
-        File file = new File(filename);
-        if (!file.exists()) {
-            System.out.println(INPUT_ERROR);
-            return null;
-        }
-
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
 
             ArrayList<String> datasetList = new ArrayList<String>();
@@ -65,7 +59,8 @@ public class VideoGameProfiler {
             dataset = datasetList.toArray(dataset);
             
         } catch (IOException ioe) {
-            System.out.println("Either the file doesn't exist or the file is in the wrong format!");
+            ioe.printStackTrace();
+            System.out.println(INPUT_ERROR);
             return null;
         }
 
@@ -73,15 +68,10 @@ public class VideoGameProfiler {
     }
 
     public static boolean writeFile(String[] dataset, double threshold, String filename) {
-        File file = new File(filename);
 
-        try (BufferedWriter bfw = new BufferedWriter(new FileWriter(file))) {
+        try (BufferedWriter bfw = new BufferedWriter(new FileWriter(filename))) {
             for (String line : dataset) {
                 String[] split = line.split(",");
-                if (split.length != 4) {
-                    System.out.println(OUTPUT_ERROR);
-                    return false;
-                }
 
                 if (Double.parseDouble(split[3]) >= threshold) {
                     bfw.write(line);
@@ -90,8 +80,8 @@ public class VideoGameProfiler {
                 }
             }
         } catch (IOException ioe) {
-            System.out.println(OUTPUT_ERROR);
             ioe.printStackTrace();
+            System.out.println(OUTPUT_ERROR);
             return false;
         }
 

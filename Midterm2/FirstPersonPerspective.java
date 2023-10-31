@@ -7,12 +7,9 @@ public class FirstPersonPerspective extends VideoGame {
     public FirstPersonPerspective(String projectName, int employeeCount, boolean priority, int gameModeCount, double sales ) {
         super(projectName, employeeCount, priority);
 
-        if (gameModeCount < 0)
+        if (gameModeCount <= 0)
             throw new IllegalArgumentException();
-
-        if (sales < 0)
-            throw new IllegalArgumentException();
-
+            
         this.gameModeCount = gameModeCount;
         this.sales = sales;
     }

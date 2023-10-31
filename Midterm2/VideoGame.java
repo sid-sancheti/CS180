@@ -39,13 +39,11 @@ public class VideoGame implements AnimatedProject {
                 similarProjects.add(animatedProject.getProjectName());
             }
         }
-        
+
         String[] projects = new String[similarProjects.size()];
         for (int i = 0; i < similarProjects.size(); i++) {
             projects[i] = similarProjects.get(i);
         }
         return projects;
     }
-
-
 }

@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SearchServer",
+            "request": "launch",
+            "mainClass": "CS180/Week11.Challenge.SearchServer",
+            "projectName": "src_62fe526c"
+        },
+        {
+            "type": "java",
+            "name": "SearchClient",
+            "request": "launch",
+            "mainClass": "CS180/Week11.Challenge.SearchClient",
+            "projectName": "src_62fe526c"
+        },
+        {
+            "type": "java",
             "name": "OrderFormGUI",
             "request": "launch",
             "mainClass": "CS180/Week11.Debugging.OrderFormGUI",
@@ -120,7 +134,7 @@
             "type": "java",
             "name": "Debug OrderFormGUI",
             "request": "launch",
-            "mainClass": "CS180/Week11.Debugging.OrderFormGUI",
+            "mainClass": "CS180/Week11.Debugging.OrderFormGUI"
         }
     ]
 }

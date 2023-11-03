@@ -3,6 +3,8 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 /**SearchServer.java
  * 
  * This class is the server side of the search engine.
@@ -21,14 +23,13 @@ public class SearchServer {
             
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Client connected: " + clientSocket.getInetAddress());
 
                 // Handle client's requests in a new thread
                 Thread clientThread = new Thread(() -> handleClient(clientSocket, database));
                 clientThread.start();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "IOException thrown", "Search Engine", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -51,18 +52,17 @@ public class SearchServer {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             String searchQuery = in.readLine();
-            System.out.println("Received search query from client: " + searchQuery);
-
             List<String> matchingTitles = new ArrayList<>();
             for (String entry : database) {
                 String[] parts = entry.split(";");
+                // The .contains() method determines whether a given phrase or word appears in a string
                 if (parts.length >= 2 && (parts[1].contains(searchQuery) || parts[2].contains(searchQuery))) {
                     matchingTitles.add(parts[1]);
                 }
             }
 
             if (matchingTitles.isEmpty()) {
-                out.println("No results found");
+                out.println("Error");
             } else {
                 for (String title : matchingTitles) {
                     out.println(title);
@@ -82,7 +82,6 @@ public class SearchServer {
 
             in.close();
             clientSocket.close();
-            System.out.println("Client disconnected: " + clientSocket.getInetAddress());
         } catch (IOException e) {
             e.printStackTrace();
         }

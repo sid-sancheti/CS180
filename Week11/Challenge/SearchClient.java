@@ -2,8 +2,6 @@ package Week11.Challenge;
 import javax.swing.*;
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
 /**SearchClient.java
  * 
  * This class is the client side of the search engine. 
@@ -34,7 +32,7 @@ public class SearchClient {
 
             client = new Socket(portHost, portNumber);
 
-            JOptionPane.showMessageDialog(null, "Connection Established", TITLE, portNumber);
+            JOptionPane.showMessageDialog(null, "Connection Established", TITLE, JOptionPane.INFORMATION_MESSAGE);
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Invalid port number", TITLE, JOptionPane.ERROR_MESSAGE);
@@ -51,10 +49,10 @@ public class SearchClient {
             return;
         }
 
+        // Asking the user for their search query
+        String searchQuery = JOptionPane.showInputDialog(null, "Enter your search query: ", TITLE, JOptionPane.QUESTION_MESSAGE);
 
-
-
-
+        
         try {
             client.close();
         } catch (IOException e) {

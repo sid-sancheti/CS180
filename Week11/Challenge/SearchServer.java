@@ -2,7 +2,6 @@ package Week11.Challenge;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 /**SearchServer.java
@@ -93,7 +92,7 @@ public class SearchServer {
                 writer.println(title);
             }
 
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }

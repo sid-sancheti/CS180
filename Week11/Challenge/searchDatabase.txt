@@ -5,3 +5,6 @@
 5;Duis aute;Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 6;Excepteur sint;Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 7;Purdue Trivia;In the distant past, Purdue Pete was not the only mascot of the university. Another mascot, Rowdy, accompanied Purdue Pete to some games. 
+8;Birds Aren't Real!;Birds aren't real. They are actually government drones that spy on us.
+9;Purdue Ranked #1 in the World;Purdue is ranked #1 in the world. This is a fact.
+10;Java 4 The Win!;Java is the best programming language. It is the only language that matters.

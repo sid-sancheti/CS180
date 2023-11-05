@@ -71,21 +71,28 @@ public class SearchClient {
             out.println(searchQuery);
 
             // Return query results
-            ArrayList<String> results = new ArrayList<String>();
-            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            String response = in.readLine();
+            ObjectInputStream in = new ObjectInputStream(client.getInputStream());
 
-            // TODO: There is something going on with the readLine function. I'm not sure what it is.
+            String[] titleResponse = (String[]) in.readObject();            
 
-            // Continue reading each line sent by the server until there are no more lines to read
-            while (response != null) {
-                results.add(response);
-                response = in.readLine();
-            }
+            // TODO: May need to place in a do-while loop so the user can select a title multiple times.
+            // Display the response to the user
+            String titleQuery = (String) JOptionPane.showInputDialog(null, "Select the Title ", "Order Form",
+	        			JOptionPane.PLAIN_MESSAGE, null, titleResponse, null);
+
+            // Send the title index to the server
+            out.println(titleQuery);
+
+            // Receive the description from the server
+            String description = (String) in.readObject();
+            JOptionPane.showMessageDialog(null, description, TITLE, JOptionPane.INFORMATION_MESSAGE);
 
             
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "IOException thrown", TITLE, JOptionPane.ERROR_MESSAGE);
+            return;
+        } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "ClassNotFoundException thrown", TITLE, JOptionPane.ERROR_MESSAGE);
             return;
         }
         

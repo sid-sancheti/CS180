@@ -32,7 +32,7 @@ public class SearchServer {
                     String title = reader.readLine();
                     writer.writeObject(getDescription(title));
 
-                    br.close();
+                    reader.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

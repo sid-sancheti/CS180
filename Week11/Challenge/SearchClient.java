@@ -68,20 +68,20 @@ public class SearchClient {
         try {
             // Send search query
             PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-            out.println(searchQuery);
-
-            // Return query results
             ObjectInputStream in = new ObjectInputStream(client.getInputStream());
 
-            String[] titleResponse = (String[]) in.readObject();            
+            // Get query results
+            out.println(searchQuery);
+            String[] titleResponse = (String[]) in.readObject();
+                        
 
             // TODO: May need to place in a do-while loop so the user can select a title multiple times.
             // Display the response to the user
-            String titleQuery = (String) JOptionPane.showInputDialog(null, "Select the Title ", "Order Form",
+            String descriptionQuery = (String) JOptionPane.showInputDialog(null, "Select the Title ", "Order Form",
 	        			JOptionPane.PLAIN_MESSAGE, null, titleResponse, null);
 
             // Send the title index to the server
-            out.println(titleQuery);
+            out.println(descriptionQuery);
 
             // Receive the description from the server
             String description = (String) in.readObject();
@@ -89,6 +89,7 @@ public class SearchClient {
 
             
         } catch (IOException e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "IOException thrown", TITLE, JOptionPane.ERROR_MESSAGE);
             return;
         } catch (ClassNotFoundException e) {

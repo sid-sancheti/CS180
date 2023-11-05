@@ -19,24 +19,25 @@ public class SearchServer {
     public static void main(String[] args) {
 
         try (ServerSocket serverSocket = new ServerSocket(1234)) {
-            
+            Socket clientSocket = serverSocket.accept();
+ 
             while (true) {
-                Socket clientSocket = serverSocket.accept();
 
-                // Handle client's requests in a new thread
-                /**
-                 * This is a lambda expression. I had to do a bit of research to figure out why my
-                 * code wasn't working and this fixed it.
-                 * I needed to run the handleClient() method in a new thread because the server
-                 * needs to be able to handle multiple clients at once.
-                 * 
-                 * The lambda expression is a way to create a new thread and run the handleClient()
-                 * Basically, it's a shorter way to run the handleClient method in the run() method
-                 */
-                Thread clientThread = new Thread(() -> handleClient(clientSocket));
-                clientThread.start();
+                try (ObjectOutputStream writer = new ObjectOutputStream(clientSocket.getOutputStream())) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
+                    String searchQuery = reader.readLine();
+                    writer.writeObject(searchForTitles(searchQuery));
+
+                    String title = reader.readLine();
+                    writer.writeObject(getDescription(title));
+
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "IOException thrown", "Search Engine", JOptionPane.ERROR_MESSAGE);
         }
@@ -94,51 +95,18 @@ public class SearchServer {
         return matchingTitlesArray;
     }
 
-    public static String getDescription(int titleIndex) {
+    public static String getDescription(String title) {
+        String description = "";
         ArrayList<String> database = loadDatabase();
-        String[] parts = database.get(titleIndex).split(";");
-        return parts[2];
-    }
-
-    private static void handleClient(Socket clientSocket) {
-        try (ObjectOutputStream writer = new ObjectOutputStream(clientSocket.getOutputStream())) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-            String message = reader.readLine();
-            
-            /**
-             * Logic of the following lines
-             * There are two types of things I need to return from the server
-             * 1. The titles of the pages that match the search query
-             * 2. The description of the page that the user selected
-             * 
-             * Since I need to determine what the user needs from just one call of the readLine() method,
-             * I can do that by checking if the message is a number or not.
-             * 
-             * If the message is a number, it means that the user has selected a page and I need to return
-             * the description of that page.
-             * Otherwise, just return the titles that match the search query.
-             */
-            try {
-                int titleIndex = Integer.parseInt(message); // If the parse is successful, query for the description
-
-                // Send the description to the client
-                writer.writeObject(getDescription(titleIndex));
-            
-            } catch (NumberFormatException e) { // If the parse is unsuccessful, query for titles
-                // Search find the titles that match the search query
-                String[] matchingTitles = searchForTitles(message);
-
-                // Send the titles to the client
-                writer.writeObject(matchingTitles);
+        for (String entry : database) {
+            String[] parts = entry.split(";");
+            if (parts[1].equals(title)) {
+                description = parts[2];
             }
-
-
-
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
+        return description;
     }
+
 }
 

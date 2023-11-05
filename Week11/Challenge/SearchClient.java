@@ -53,7 +53,7 @@ public class SearchClient {
             return;
         }
 
-        // TODO: Place in a do-while loop to allow the user to search multiple times.
+        do {
         // Asking the user for their search query
         String searchQuery;
         do {    // Verify whether the user inputed a query.
@@ -74,8 +74,11 @@ public class SearchClient {
             out.println(searchQuery);
             String[] titleResponse = (String[]) in.readObject();
                         
+             if (titleResponse.length == 0) {
+                JOptionPane.showMessageDialog(null, "No results found", TITLE, JOptionPane.INFORMATION_MESSAGE);
+                continue;
+            }
 
-            // TODO: May need to place in a do-while loop so the user can select a title multiple times.
             // Display the response to the user
             String descriptionQuery = (String) JOptionPane.showInputDialog(null, "Select the Title ", "Order Form",
 	        			JOptionPane.PLAIN_MESSAGE, null, titleResponse, null);
@@ -86,19 +89,20 @@ public class SearchClient {
             // Receive the description from the server
             String description = (String) in.readObject();
             JOptionPane.showMessageDialog(null, description, TITLE, JOptionPane.INFORMATION_MESSAGE);
-
-            
+           
         } catch (IOException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "IOException thrown", TITLE, JOptionPane.ERROR_MESSAGE);
             return;
         } catch (ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, "ClassNotFoundException thrown", TITLE, JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+        } while (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Would you like to search again?", 
+          TITLE, JOptionPane.YES_NO_OPTION));
+
         // Close the server connection with a goodbye message
         JOptionPane.showMessageDialog(null, "Goodbye User! Until next time...", TITLE, JOptionPane.INFORMATION_MESSAGE);
+
         try {
             client.close();
         } catch (IOException e) {

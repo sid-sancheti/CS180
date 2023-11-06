@@ -1,10 +1,13 @@
 package Week11.Challenge;
+
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
-/**SearchServer.java
+
+/**
+ * SearchServer.java
  * 
  * This class is the server side of the search engine.
  * 
@@ -18,23 +21,23 @@ public class SearchServer {
 
     public static void main(String[] args) {
 
-        try (ServerSocket serverSocket = new ServerSocket(1234)) {
+        try {
+            ServerSocket serverSocket = new ServerSocket(1234);
             Socket clientSocket = serverSocket.accept();
- 
+            ObjectOutputStream writer = new ObjectOutputStream(clientSocket.getOutputStream());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             while (true) {
+                String searchQuery = reader.readLine();
+                String[] titles = searchForTitles(searchQuery);
+                writer.writeObject(titles);
+                writer.flush();
 
-                try (ObjectOutputStream writer = new ObjectOutputStream(clientSocket.getOutputStream())) {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-                    String searchQuery = reader.readLine();
-                    writer.writeObject(searchForTitles(searchQuery));
-
+                if (titles.length != 0) {
                     String title = reader.readLine();
                     writer.writeObject(getDescription(title));
-
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    writer.flush();
                 }
+
             }
 
         } catch (IOException e) {
@@ -82,13 +85,13 @@ public class SearchServer {
             String[] parts = entry.split(";");
 
             String[] titles = database.get(i).split(";");
-            // The .contains() method determines whether a given phrase or word appears in a string
+            // The .contains() method determines whether a given phrase or word appears in a
+            // string
             if (parts[1].contains(searchQuery) || parts[2].contains(searchQuery)) {
                 matchingTitles.add(titles[1]);
             }
         }
 
-        // TODO: Make sure to add titles from the database, not the lowercase database
         // Convert the result into an array and return it.
         String[] matchingTitlesArray = matchingTitles.toArray(new String[matchingTitles.size()]);
         return matchingTitlesArray;
@@ -108,4 +111,3 @@ public class SearchServer {
     }
 
 }
-

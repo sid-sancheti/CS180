@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ColorPicker",
+            "request": "launch",
+            "mainClass": "CS180/Week12.Debugging.ColorPicker",
+            "projectName": "src_62fe526c"
+        },
+        {
+            "type": "java",
             "name": "SimplePaint",
             "request": "launch",
             "mainClass": "CS180/Week12.Walkthrough.SimplePaint",

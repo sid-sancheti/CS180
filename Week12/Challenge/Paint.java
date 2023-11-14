@@ -3,6 +3,7 @@ package Week12.Challenge;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Random;
 
 /**
  * @author Siddharth Sancheti, Section 33
@@ -17,30 +18,32 @@ public class Paint extends JComponent implements Runnable {
     private int oldY; // previous mouse y coordinate
 
     // Variables for RGB and Hexadecimal color values
-    private String hex;
+    private String hexText;
     private String rText;
     private String gText;
     private String bText;
 
     // Buttons needed for the GUI (Top)
-    JButton clearButton;
-    JButton fillButton;
-    JButton eraseButton;
-    JButton randomButton;
+    private JButton clearButton = new JButton("Clear");
+    private JButton fillButton = new JButton("Fill");
+    private JButton eraseButton = new JButton("Erase");
+    private JButton randomButton = new JButton("Randomize");
 
     // Buttons and fields need for the GUI (Bottom)
-    JTextField hexField;
-    JButton hexButton;
-    JTextField rField;
-    JTextField gField;
-    JTextField bField;
-    JButton rgbButton;
+    private JTextField hexField = new JTextField("#", 5);
+    private JButton hexButton = new JButton("Hex");
+    private JTextField rField = new JTextField(5);
+    private JTextField gField = new JTextField(5);
+    private JTextField bField = new JTextField(5);
+    private JButton rgbButton = new JButton("RGB");
 
-    // TODO: Remove these buttons
-    JButton yellowButton; // a button to change paint color
-    JButton blueButton; // a button to change paint color
-    JButton redButton; // a button to change paint color
-    JButton greenButton; // a button to change paint color
+    // These values will store the RGB and Hexadecimal color values
+    int rgb;    // Pen color
+    String hex;
+
+    // These values will store the background color.
+    // (Default is white)
+    int rgbBackground = 255255255;
 
     Paint paint; // variable of the type Paint
 
@@ -48,37 +51,173 @@ public class Paint extends JComponent implements Runnable {
     ActionListener actionListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == yellowButton) {
-                paint.yellow();
+            if (e.getSource() == clearButton) {
+                paint.clear();
             }
-            if (e.getSource() == blueButton) {
-                paint.blue();
+            if (e.getSource() == fillButton) {
+                paint.fill();
             }
-            if (e.getSource() == redButton) {
-                paint.red();
+            if (e.getSource() == eraseButton) {
+                paint.erase();
             }
-            if (e.getSource() == greenButton) {
-                paint.green();
-            }
+            if (e.getSource() == randomButton) {
+                int red = rng();
+                int green = rng();
+                int blue = rng();
 
+                hexField.setText("#" + Integer.toHexString(red) + Integer.toHexString(green) + Integer.toHexString(blue));
+                // Shift the bits of rgb 16 bits to the right, then mask the first 8 bits
+                rField.setText(Integer.toString(red));
+                // Shift the bits of rgb 16 bits to the right, then mask the first 8 bits
+                gField.setText(Integer.toString(green));
+                // Mask the first 8 bits of rgb
+                bField.setText(Integer.toString(blue));
+
+                graphics2D.setPaint(new Color(red, green, blue));
+
+                repaint();
+            }
+            if (e.getSource() == hexButton) {
+                paint.hex();
+            }   
+            if (e.getSource() == rgbButton) {
+                rText = rField.getText();
+                gText = gField.getText();
+                bText = bField.getText();
+                
+                // If the RGB text fields are valid, set the color of the pen to the color
+                if (rText.length() <= 3 && gText.length() <= 3 && bText.length() <= 3) {
+                    // Convert the RGB values to an integer
+                    try {
+                        rgbVerification(Integer.parseInt(rText));
+                        rgbVerification(Integer.parseInt(gText));
+                        rgbVerification(Integer.parseInt(bText));
+                        rgb = Integer.parseInt(rText) * 1000000 + Integer.parseInt(gText) * 1000 + Integer.parseInt(bText);
+
+                    } catch (NumberFormatException ne) {
+                        rgb = 0;
+                        JOptionPane.showMessageDialog(null, "Not a valid RGB value.", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    } catch (IllegalNumberException in) {
+                        JOptionPane.showMessageDialog(null, "Not a valid RGB value.", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                    graphics2D.setPaint(new Color(rgb));
+                    hexField.setText("#" + Integer.toHexString(rgb));
+                    repaint();
+                }
+                // Else, throw an error
+                else {
+                    JOptionPane.showMessageDialog(null, "Not a valid RGB value.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
     };
 
-    /* set up paint colors */
-    public void yellow() {
-        graphics2D.setPaint(Color.yellow);
+    /* Button controls */
+    // Reset the screen to white
+    public void clear() {
+        graphics2D.setPaint(new Color(rgbBackground));
+        graphics2D.fillRect(0, 0, getSize().width, getSize().height);
+        graphics2D.setPaint(Color.black);
+        bField.setText("Test");
+        repaint();
     }
 
-    public void blue() {
-        graphics2D.setPaint(Color.blue);
+    // Fill the canvas with the current pen color
+    public void fill() {
+        graphics2D.setPaint(new Color(rgb));
+        rgbBackground = rgb;
+        graphics2D.fillRect(0, 0, getSize().width, getSize().height);
+        graphics2D.setPaint(Color.black);
+        hexField.setText("#");
+        rField.setText("");
+        gField.setText("");
+        bField.setText("");
+        repaint();
     }
 
-    public void red() {
-        graphics2D.setPaint(Color.red);
+    // Set the color of the pen equal to the background color
+    public void erase() {
+        graphics2D.setPaint(new Color(rgbBackground));
+        repaint();
     }
 
-    public void green() {
-        graphics2D.setPaint(Color.green);
+    // Set the color of the pen to a random color
+    public void random() {
+
+    }
+
+    // When the hex button is pressed, set the color of the pen to the color
+    public void hex() {
+        hexText = hexField.getText();
+        // If the hex text field is empty, set the color of the pen to white
+        if (hexText.equals("#")) {
+            // If the hex text field is not empty, set the color of the pen to the color
+            if (hexText.length() == 7) {
+                hex = hexText.substring(1);
+                try {
+                    rgb = Integer.parseInt(hex, 16);
+                } catch (NumberFormatException e) {
+                    rgb = 0;
+                    JOptionPane.showMessageDialog(null, "Not a valid hex value.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+                graphics2D.setPaint(new Color(rgb));
+                // Shift the bits of rgb 16 bits to the right, then mask the first 8 bits
+                rField.setText(Integer.toString((rgb >> 16) & 0xFF));
+                // Shift the bits of rgb 16 bits to the right, then mask the first 8 bits
+                gField.setText(Integer.toString((rgb >> 8) & 0xFF));
+                // Mask the first 8 bits of rgb
+                bField.setText(Integer.toString(rgb & 0xFF));
+                repaint();
+            }
+            // If the hex text field is not empty, set the color of the pen to the color
+            else {
+               JOptionPane.showMessageDialog(null, "Not a valid hex value.", "Error",
+                    JOptionPane.ERROR_MESSAGE); 
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Not a valid hex value.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void rgb() {
+        rText = rField.getText();
+        gText = gField.getText();
+        bText = bField.getText();
+        
+        // If the RGB text fields are valid, set the color of the pen to the color
+        if (rText.length() <= 3 && gText.length() <= 3 && bText.length() <= 3) {
+            // Convert the RGB values to an integer
+            try {
+                rgbVerification(Integer.parseInt(rText));
+                rgbVerification(Integer.parseInt(gText));
+                rgbVerification(Integer.parseInt(bText));
+                rgb = Integer.parseInt(rText) * 1000000 + Integer.parseInt(gText) * 1000 + Integer.parseInt(bText);
+
+            } catch (NumberFormatException e) {
+                rgb = 0;
+                JOptionPane.showMessageDialog(null, "Not a valid RGB value.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalNumberException e) {
+                JOptionPane.showMessageDialog(null, "Not a valid RGB value.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+            
+            graphics2D.setPaint(new Color(rgb));
+            hexField.setText("#" + Integer.toHexString(rgb));
+            repaint();
+        }
+        // Else, throw an error
+        else {
+            JOptionPane.showMessageDialog(null, "Not a valid RGB value.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
     }
 
     public Paint() {
@@ -111,25 +250,30 @@ public class Paint extends JComponent implements Runnable {
     }
 
     public static void main(String[] args) {
+        // Run the GUI codes on the Event-Dispatcher Thread for thread safety
         SwingUtilities.invokeLater(new Paint());
     }
 
     public void run() {
         /* set up JFrame */
-        JFrame frame = new JFrame("Debugging Exercise");
+        JFrame frame = new JFrame("Week 12 Challenge");
         Container content = frame.getContentPane();
         content.setLayout(new BorderLayout());
         paint = new Paint();
         content.add(paint, BorderLayout.CENTER);
 
-        yellowButton = new JButton("Yellow");
-        yellowButton.addActionListener(actionListener);
-        blueButton = new JButton("Blue");
-        blueButton.addActionListener(actionListener);
-        redButton = new JButton("Red");
-        redButton.addActionListener(actionListener);
-        greenButton = new JButton("Green");
-        greenButton.addActionListener(actionListener);
+        clearButton.addActionListener(actionListener);
+        fillButton.addActionListener(actionListener);
+        eraseButton.addActionListener(actionListener);
+        randomButton.addActionListener(actionListener);
+        hexButton.addActionListener(actionListener);
+        rgbButton.addActionListener(actionListener);
+
+        rField.addActionListener(actionListener);
+        gField.addActionListener(actionListener);
+        bField.addActionListener(actionListener);
+        hexField.addActionListener(actionListener);
+
 
         // Add the buttons to the layout.
         JPanel northPanel = new JPanel();
@@ -146,6 +290,7 @@ public class Paint extends JComponent implements Runnable {
         southPanel.add(rField);
         southPanel.add(gField);
         southPanel.add(bField);
+        southPanel.add(rgbButton);
 
         content.add(southPanel, BorderLayout.SOUTH);
 
@@ -172,5 +317,23 @@ public class Paint extends JComponent implements Runnable {
         }
         g.drawImage(image, 0, 0, null);
 
+    }
+
+    public static void rgbVerification (int rgbValue) throws IllegalNumberException {
+        if (rgbValue < 0 || rgbValue > 255) {
+            throw new IllegalNumberException();
+        }
+    }
+
+    // Generate a random number between 0 and 255
+    public static int rng() {
+        Random rand = new Random();
+        return rand.nextInt(256);
+    }
+
+    static class IllegalNumberException extends Exception {
+        public IllegalNumberException() {
+            super("Not a valid number.");
+        }
     }
 }

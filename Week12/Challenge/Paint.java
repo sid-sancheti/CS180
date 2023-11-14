@@ -5,7 +5,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-/**
+/**Paint.java
+ * 
+ * This is a more extensive program as made in Walkthrough and Debugging.
+ * 
  * @author Siddharth Sancheti, Section 33
  * @version November 13, 2023
  */
@@ -74,12 +77,12 @@ public class Paint extends JComponent implements Runnable {
 
             }
             if (e.getSource() == eraseButton) {
-                paint.erase(redBackground, greenBackground, blueBackground);
+                paint.erase();
             }
             if (e.getSource() == randomButton) {
-                int red = rng();
-                int green = rng();
-                int blue = rng();
+                red = rng();
+                green = rng();
+                blue = rng();
 
                 hexField.setText(
                         "#" + Integer.toHexString(red) + Integer.toHexString(green) + Integer.toHexString(blue));
@@ -122,9 +125,7 @@ public class Paint extends JComponent implements Runnable {
                             JOptionPane.showMessageDialog(null, "Not a valid hex value.", "Error",
                                     JOptionPane.ERROR_MESSAGE);
                         }
-                    }
-                    // If the hex text field is not empty, set the color of the pen to the color
-                    else {
+                    } else {
                         JOptionPane.showMessageDialog(null, "Not a valid hex value.", "Error",
                                 JOptionPane.ERROR_MESSAGE);
                     }
@@ -161,9 +162,7 @@ public class Paint extends JComponent implements Runnable {
                     hexField.setText(
                             "#" + Integer.toHexString(red) + Integer.toHexString(green) + Integer.toHexString(blue));
                     repaint();
-                }
-                // Else, throw an error
-                else {
+                } else {
                     JOptionPane.showMessageDialog(null, "Not a valid RGB value.", "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
@@ -193,8 +192,8 @@ public class Paint extends JComponent implements Runnable {
         repaint();
     }
 
-    public void setPenColor(int red, int green, int blue) {
-        graphics2D.setPaint(new Color(red, green, blue));
+    public void setPenColor(int redColor, int greenColor, int blueColor) {
+        graphics2D.setPaint(new Color(redColor, greenColor, blueColor));
     }
 
     // Reset the pen color to black
@@ -204,7 +203,7 @@ public class Paint extends JComponent implements Runnable {
     }
 
     // Set the color of the pen equal to the background color
-    public void erase(int red, int green, int blue) {
+    public void erase() {
         graphics2D.setPaint(new Color(redBackground, greenBackground, blueBackground));
         repaint();
     }

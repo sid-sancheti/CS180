@@ -10,7 +10,7 @@ import java.util.Random;
  * This is a more extensive program as made in Walkthrough and Debugging.
  * 
  * @author Siddharth Sancheti, Section 33
- * @version November 13, 2023
+ * @version November 14, 2023
  */
 public class Paint extends JComponent implements Runnable {
     private Image image; // the canvas
@@ -326,6 +326,12 @@ public class Paint extends JComponent implements Runnable {
         return rand.nextInt(256);
     }
 
+    /**
+     * IllegalValueException is a custom exception.
+     * 
+     * @author Siddharth Sancheti, Section 33
+     * @version November 13, 2023
+     */
     static class IllegalValueException extends Exception {
         public IllegalValueException() {
             super("Not a valid number.");

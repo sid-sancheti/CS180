@@ -1,2 +1,2 @@
-# CS180
-All my CS180 homework. Fall 2023
+# CS180 Purdue
+All my homework for Purdue's CS180 course. Fall 2023
